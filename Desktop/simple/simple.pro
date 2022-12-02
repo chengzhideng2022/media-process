@@ -13,6 +13,8 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    ../world_v5/world.h \
+    ../world_v5/world_global.h \
     mainwindow.h \
     world.h \
 
