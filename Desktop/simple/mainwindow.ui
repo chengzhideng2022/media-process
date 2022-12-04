@@ -45,7 +45,7 @@ hr { height: 1px; border-width: 0; }
      <string>clear</string>
     </property>
    </widget>
-   <widget class="QProgressBar" name="progressBar">
+   <widget class="QProgressBar" name="HPBar">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -58,7 +58,7 @@ hr { height: 1px; border-width: 0; }
      <number>24</number>
     </property>
    </widget>
-   <widget class="QProgressBar" name="progressBar_2">
+   <widget class="QProgressBar" name="EnergyBar_2">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -97,7 +97,7 @@ hr { height: 1px; border-width: 0; }
      <string>Energy</string>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QGraphicsView" name="gameView">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -146,7 +146,7 @@ hr { height: 1px; border-width: 0; }
      <string>Restart</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>523</x>
@@ -157,35 +157,35 @@ hr { height: 1px; border-width: 0; }
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="easyButton_6">
        <property name="text">
-        <string>PushButton</string>
+        <string>Easy</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_7">
+      <widget class="QPushButton" name="mediumButton_7">
        <property name="text">
-        <string>PushButton</string>
+        <string>Medium</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_8">
+      <widget class="QPushButton" name="hardButton_8">
        <property name="text">
-        <string>PushButton</string>
+        <string>Hard</string>
        </property>
       </widget>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>520</x>
       <y>63</y>
       <width>281</width>
-      <height>62</height>
+      <height>93</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
@@ -193,15 +193,8 @@ hr { height: 1px; border-width: 0; }
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="1">
-          <widget class="QPushButton" name="pushButton_2">
-           <property name="text">
-            <string>graphics</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="autoplayButton_3">
            <property name="text">
             <string>text</string>
            </property>
@@ -215,9 +208,16 @@ hr { height: 1px; border-width: 0; }
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QPushButton" name="pushButton_5">
+          <widget class="QPushButton" name="pathfinderButton_5">
            <property name="text">
             <string>pathfinder</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="graphicsButton_2">
+           <property name="text">
+            <string>graphics</string>
            </property>
           </widget>
          </item>
