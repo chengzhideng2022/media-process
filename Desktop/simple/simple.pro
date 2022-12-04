@@ -10,13 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    worldcontroller.cpp
 
 HEADERS += \
     ../world_v5/world.h \
     ../world_v5/world_global.h \
     mainwindow.h \
     world.h \
+    worldcontroller.h
 
 
 FORMS += \
