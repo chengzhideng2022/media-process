@@ -35,3 +35,6 @@ else:unix: LIBS += -L$$PWD/../world_v5/ -lworld
 
 INCLUDEPATH += $$PWD/../world_v5
 DEPENDPATH += $$PWD/../world_v5
+
+RESOURCES += \
+    img.qrc
