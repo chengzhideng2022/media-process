@@ -29,6 +29,9 @@ protected:
     float value;
 };
 
+
+
+
 class WORLDSHARED_EXPORT Enemy : public QObject, public Tile
 {
     Q_OBJECT
@@ -45,6 +48,11 @@ public:
 private:
     bool defeated; //false by construction
 };
+
+
+
+
+
 
 class WORLDSHARED_EXPORT PEnemy: public Enemy
 {
@@ -65,6 +73,10 @@ signals:
 private:
     float poisonLevel;
 };
+
+
+
+
 
 class WORLDSHARED_EXPORT Protagonist: public QObject, public Tile
 {
@@ -90,6 +102,10 @@ private:
     float health; //100.0f by construction
     float energy; //100.0f by construction
 };
+
+
+
+
 
 class WORLDSHARED_EXPORT World
 {
