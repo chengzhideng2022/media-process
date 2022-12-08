@@ -1,9 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include <QPainter>
 
 #include <QMainWindow>
-#include "item.h"
+#include "myscene.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -15,11 +14,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void paintEvent(QPaintEvent *);
 
 private:
     Ui::MainWindow *ui;
-     shared_ptr<Item> item;
-     QGraphicsScene* scene;
+    myScene *sc;
 };
 #endif // MAINWINDOW_H

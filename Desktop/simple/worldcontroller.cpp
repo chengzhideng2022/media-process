@@ -3,6 +3,9 @@
 #include "struct.h"
 WorldController::WorldController(QString map)
 {    map = ":/img/worldmap4.png";
+     QImage img;
+     img.load(":/img/worldmap4.png");
+     img.save(":/img/worldmap4.png");
     world = std::make_shared<World>();
     world->createWorld(map,20,20,0.0);
 

@@ -9,39 +9,36 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    item.cpp \
     main.cpp \
     mainwindow.cpp \
-    myscene.cpp \
-    worldcontroller.cpp
+    myitem.cpp \
+    myscene.cpp
 
 HEADERS += \
-    ../world_v5/world.h \
-    ../world_v5/world_global.h \
-    item.h \
     mainwindow.h \
-    myscene.h \
-    struct.h \
-    world.h \
-    worldcontroller.h
-
+    myitem.h \
+    myscene.h
 
 FORMS += \
     mainwindow.ui
+
+TRANSLATIONS += \
+    chengzhifinalproject_zh_CN.ts
+CONFIG += lrelease
+CONFIG += embed_translations
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../Desktop/world_v5/release/ -lworld
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../Desktop/world_v5/debug/ -lworld
+else:unix: LIBS += -L$$PWD/../Desktop/world_v5/ -lworld
 
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../world_v5/release/ -lworld
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../world_v5/debug/ -lworld
-else:unix: LIBS += -L$$PWD/../world_v5/ -lworld
-
-INCLUDEPATH += $$PWD/../world_v5
-DEPENDPATH += $$PWD/../world_v5
-
+INCLUDEPATH += $$PWD/../Desktop/world_v5
+DEPENDPATH += $$PWD/../Desktop/world_v5
 RESOURCES += \
     img.qrc
+
+

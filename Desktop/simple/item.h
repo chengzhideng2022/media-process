@@ -3,6 +3,7 @@
 #include <QGraphicsPixmapItem>
 #include "worldcontroller.h"
 #include <QProcess>
+#include <QGraphicsScene>
 
 class Item : public QGraphicsPixmapItem
 {
@@ -13,6 +14,7 @@ public:
     //void resetVC() override;
   //  virtual QWidget * getViewer() override;
 
+    QGraphicsScene* getScene() const;
     void fillworld() ;
     void fillrow(vector<float> values, int row);
 
@@ -53,7 +55,7 @@ private:
    // QProgressBar * energyBar;
    // QLabel * healthLabel;
   //  QLabel * energyLabel;
-
+    std::shared_ptr<WorldController> wc;
   //  vector<GraphicsEnemy *> enemies;
    // vector<GraphicsHP *> hps;
     vector<wrapperHP> whps;
