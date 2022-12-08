@@ -17,7 +17,9 @@ SOURCES += \
 HEADERS += \
     mainwindow.h \
     myitem.h \
-    myscene.h
+    myscene.h \
+    world.h \
+    world_global.h
 
 FORMS += \
     mainwindow.ui

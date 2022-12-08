@@ -24,13 +24,13 @@
      </rect>
     </property>
     <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>710</x>

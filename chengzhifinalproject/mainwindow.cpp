@@ -7,8 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QPainter painter(this);
-    QPixmap pix;
+  //  QPainter painter(this);
+   // QPixmap pix;
      this->sc = new myScene;
     this->ui->gameview->setScene(sc);
 }

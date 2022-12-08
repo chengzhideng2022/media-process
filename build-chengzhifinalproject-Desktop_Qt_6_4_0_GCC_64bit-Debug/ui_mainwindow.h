@@ -26,7 +26,7 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QGraphicsView *gameview;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *easybutton;
     QPushButton *mediumbutton;
@@ -44,28 +44,28 @@ public:
         gameview = new QGraphicsView(centralwidget);
         gameview->setObjectName("gameview");
         gameview->setGeometry(QRect(40, 10, 651, 441));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(gameview->sizePolicy().hasHeightForWidth());
         gameview->setSizePolicy(sizePolicy);
-        widget = new QWidget(centralwidget);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(710, 160, 82, 89));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(centralwidget);
+        layoutWidget->setObjectName("layoutWidget");
+        layoutWidget->setGeometry(QRect(710, 160, 82, 89));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        easybutton = new QPushButton(widget);
+        easybutton = new QPushButton(layoutWidget);
         easybutton->setObjectName("easybutton");
 
         verticalLayout->addWidget(easybutton);
 
-        mediumbutton = new QPushButton(widget);
+        mediumbutton = new QPushButton(layoutWidget);
         mediumbutton->setObjectName("mediumbutton");
 
         verticalLayout->addWidget(mediumbutton);
 
-        pushButton_3 = new QPushButton(widget);
+        pushButton_3 = new QPushButton(layoutWidget);
         pushButton_3->setObjectName("pushButton_3");
 
         verticalLayout->addWidget(pushButton_3);
