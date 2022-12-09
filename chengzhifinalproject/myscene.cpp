@@ -17,7 +17,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  height = world->getRows() - 1;
  width = world->getCols() - 1;
 
- /*for ( auto &tile : tiles )
+ for ( auto &tile : tiles )
      {
          std::unique_ptr<Tile> newTile = std::move(tile);
          float val = newTile->getValue();
@@ -30,23 +30,35 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
          }
          QGraphicsRectItem *rectItem = new QGraphicsRectItem();
          rectItem->setRect(newTile->getXPos(),newTile->getYPos(), 1, 1);
+         rectItem-> setPen(QPen(Qt::NoPen));;
+         rectItem->setBrush(QBrush(QColor(val*255, val*255, val*255)));
+         this->addItem(rectItem);
      }
-*/
+
 
 
                                      //  tiles = item->getTiles();
-  QGraphicsRectItem *rectItem = new QGraphicsRectItem();
-  rectItem->setRect(100000,1000, 10, 10);
+ /* QGraphicsRectItem *rectItem = new QGraphicsRectItem();
+  rectItem->setRect(0,0, 100, 100);
 
 
   rectItem-> setPen(QPen(Qt::NoPen));;
   rectItem->setBrush(QBrush(QColor(255, 0, 255)));
-  rectItem->setPos(1000,10000);
+ // rectItem->setPos(100000000,1000000);
   rectItem->setFlag(QGraphicsItem::ItemIsMovable);
- // this->addItem(rectItem);
+  this->addItem(rectItem);
+  QGraphicsRectItem *rectItem1 = new QGraphicsRectItem();
+  rectItem1->setRect(100,0, 100, 100);
 
+
+  rectItem1-> setPen(QPen(Qt::NoPen));;
+  rectItem1->setBrush(QBrush(QColor(255, 0, 255)));
+ //rectItem1->setPos(100000000,1000000);
+  rectItem1->setFlag(QGraphicsItem::ItemIsMovable);
+  this->addItem(rectItem1);
      //QGraphicsPixmapItem *pixItem = new QGraphicsPixmapItem();
-drawWorld();
+//drawWorld();
+*/
 }
 
 void myScene::drawWorld()
