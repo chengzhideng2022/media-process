@@ -37,7 +37,10 @@ myItem::myItem()
 
       this->setPixmap(pix);
 }
-
+int myItem::ab()
+{
+    a=1;
+}
 //vector<unique_ptr<Tile>> myItem::getTiles() const
 //{
   //  return this->tiles;
