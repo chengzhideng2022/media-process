@@ -1,6 +1,7 @@
 #include "myscene.h"
 #include "qevent.h"
 #include <QGraphicsView>
+#include <QDebug>
 
 myScene::myScene(QObject *parent) : QGraphicsScene{parent}
 {
@@ -11,7 +12,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  //this->addItem(this->item);
  //item2->setPos(2000,20000);
  //this->addItem(item2);
- QString map = ":/img/worldmap4.png";
+ QString map = ":/img/maze3.png";
  world = std::make_unique<World>();
  world->createWorld(map,20,20,0.0);
  enemies = world->getEnemies();
@@ -22,10 +23,10 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  width = world->getCols();
 //QPoint cursorPoint;
 
+scalNum=10;
 
 
-
-drawWorld();
+drawWorld(scalNum);
 
 }
 void myScene::keyPressEvent(QKeyEvent *event)
@@ -34,16 +35,35 @@ void myScene::keyPressEvent(QKeyEvent *event)
 
 
     if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
-       protpixmapItem ->moveBy(-2,0); prot->setXPos(prot->getXPos()-1);}
+       protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();}
+    else if (event->key() == Qt::Key_Left && !checkwall(prot->getXPos()-1,prot->getYPos())){
+       protpixmapItem ->moveBy(scalNum,0); prot->setXPos(prot->getXPos()+1);}
+
+
+
     else if (event->key() == Qt::Key_Right && checkwall(prot->getXPos()+1,prot->getYPos())) {// 向右移动
-       protpixmapItem ->moveBy(2, 0); prot->setXPos(prot->getXPos()+1);}
+       protpixmapItem ->moveBy(scalNum, 0); prot->setXPos(prot->getXPos()+1);emit moveViewSignal();}
+    else if (event->key() == Qt::Key_Right  && !checkwall(prot->getXPos()+1,prot->getYPos())){
+       protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);}
+
+
+
+
     else if (event->key() == Qt::Key_Up && checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
-        protpixmapItem->moveBy(0, -2);prot->setYPos(prot->getYPos()-1);}
+        protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);emit moveViewSignal();}
+    else if (event->key() == Qt::Key_Up && !checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
+        protpixmapItem->moveBy(0, +scalNum);prot->setYPos(prot->getYPos()+1);}
+
+
     else if (event->key() == Qt::Key_Down && checkwall(prot->getXPos()-1,prot->getYPos()+1)){ // 向下移动
-        protpixmapItem->moveBy(0, 2);prot->setYPos(prot->getYPos()+1);}
+        protpixmapItem->moveBy(0, scalNum);prot->setYPos(prot->getYPos()+1);emit moveViewSignal();}
+    else if (event->key() == Qt::Key_Down && !checkwall(prot->getXPos()-1,prot->getYPos()+1)){ // 向下移动
+        protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);}
 }
-void myScene::drawWorld()
+
+void myScene::drawWorld(int scalNum)
 {
+
     int rows = height;
     int cols = width;
 
@@ -69,7 +89,7 @@ void myScene::drawWorld()
              val = newTile->getValue();
              array[ty][tx]=val;
             QGraphicsRectItem *rectItem = new QGraphicsRectItem();
-            rectItem->setRect(newTile->getXPos()*2,newTile->getYPos()*2, 2, 2);
+            rectItem->setRect(newTile->getXPos()*scalNum,newTile->getYPos()*scalNum, scalNum, scalNum);
             rectItem-> setPen(QPen(Qt::NoPen));;
             rectItem->setBrush(QBrush(QColor(val*255, 255, val*255)));
             this->addItem(rectItem);
@@ -92,7 +112,7 @@ void myScene::drawWorld()
         pix.load(":/img/virus4.png");
         QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem();
         pixmapItem->setPixmap(pix);
-         pixmapItem->setPos(enemy->getXPos()*2, enemy->getYPos()*2);
+         pixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
          pixmapItem->setZValue(1);
          pixmapItem->grabKeyboard();
          this->addItem(pixmapItem);
@@ -104,15 +124,15 @@ void myScene::drawWorld()
         pix.load(":/img/pill1.png");
         QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem();
         pixmapItem->setPixmap(pix);
-         pixmapItem->setPos(healthpack->getXPos()*2, healthpack->getYPos()*2);
+         pixmapItem->setPos(healthpack->getXPos()*scalNum, healthpack->getYPos()*scalNum);
          pixmapItem->setZValue(1);
          this->addItem(pixmapItem);
     }
     QPixmap pix;
-    pix.load(":/img/prot1.png");
+    pix.load(":/myimg/Run1.png");
     protpixmapItem = new QGraphicsPixmapItem();
     protpixmapItem->setPixmap(pix);
-    protpixmapItem->setPos(prot->getXPos()*2, prot->getYPos()*2);
+    protpixmapItem->setPos(prot->getXPos()*scalNum, prot->getYPos()*scalNum);
     protpixmapItem->setZValue(1);
      this->addItem(protpixmapItem);
  /*   for ( auto &hp : world->getHealthPacks() )

@@ -10,19 +10,22 @@ class myScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit myScene(QObject *parent = nullptr);
-void drawWorld();
+void drawWorld(int scal);
 //std::unique_ptr<Protagonist> getprot();
 void userMove();
 void keyPressEvent(QKeyEvent *event);
 float checkwall(int x, int y);
 
 signals:
-
+void moveViewSignal();
+public slots:
+//void moveView();
 
 private:
  myItem *item;
  int height;
  int width;
+ int scalNum;
  std::unique_ptr<World> world;
  std::vector<std::unique_ptr<Tile>> tiles;
 QImage bg;

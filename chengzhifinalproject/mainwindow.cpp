@@ -17,9 +17,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //this->ui->gameview->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏竖条
     this->ui->gameview->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     this->ui->gameview->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
+    //this->ui->gameview->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     this->sc = new myScene;
     this->ui->gameview->setScene(sc);
+    this->ui->gameview->centerOn(0, 0);
+    //connect(this->ui->gameview,);
 }
 
 MainWindow::~MainWindow()

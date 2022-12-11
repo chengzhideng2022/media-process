@@ -52,5 +52,11 @@
         <file>img/zombie1.png</file>
         <file>img/zombie2.png</file>
         <file>img/zombie4.png</file>
+        <file>../Desktop/采取 2 天堂(Take 2 Heaven)_爱给网_aigei_com/Characters/Gaviel/Run/GavielG_Run3.png</file>
+        <file>../Desktop/采取 2 天堂(Take 2 Heaven)_爱给网_aigei_com/Characters/Gaviel/Run/GavielG_Run4.png</file>
+        <file>myimg/Run1.png</file>
+        <file>myimg/Run2.png</file>
+        <file>myimg/Run3.png</file>
+        <file>myimg/Run4.png</file>
     </qresource>
 </RCC>
