@@ -18,6 +18,7 @@ public:
     ~MainWindow();
     void wheelEvent(QWheelEvent *event);
     void getmousePressEvent(QMouseEvent *event);
+    void moveView(QKeyEvent *event);
     //void keyPressEvent(QKeyEvent *event);
  //   void keyReleaseEvent(QKeyEvent *event);
    // void userMove();

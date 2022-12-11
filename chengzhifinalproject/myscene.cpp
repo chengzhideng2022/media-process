@@ -155,6 +155,15 @@ return difficulty;
 
 
 }
+
+int myScene::getProtX()
+{
+    return prot->getXPos();
+}
+int myScene::getProtY()
+{
+    return prot->getYPos();
+}
 /*
 void myScene::userMove()
 

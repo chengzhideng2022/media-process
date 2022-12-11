@@ -15,7 +15,8 @@ void drawWorld(int scal);
 void userMove();
 void keyPressEvent(QKeyEvent *event);
 float checkwall(int x, int y);
-
+int getProtX();
+int getProtY();
 signals:
 void moveViewSignal();
 public slots:

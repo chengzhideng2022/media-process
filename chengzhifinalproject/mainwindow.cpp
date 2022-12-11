@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     this->sc = new myScene;
     this->ui->gameview->setScene(sc);
-    this->ui->gameview->centerOn(0, 0);
+    this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
     //connect(this->ui->gameview,);
 }
 
@@ -96,8 +96,11 @@ void MainWindow::wheelEvent(QWheelEvent *event)
     //this->ui->gameview->verticalScrollBar()->setverticalScrollBar(int(cursorPoint.y() - viewHeight * vScale));
 }
 
+void MainWindow::moveView(QKeyEvent *event)
+{
+    //  if (event->key() == Qt::Key_Left)
 
-//void MainWindow::keyPressEvent(QKeyEvent *event)
-//{
+           this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
 
-//}
+}
+
