@@ -23,10 +23,10 @@
    <widget class="QGraphicsView" name="gameview">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>70</y>
-      <width>471</width>
-      <height>271</height>
+      <x>10</x>
+      <y>10</y>
+      <width>1231</width>
+      <height>601</height>
      </rect>
     </property>
     <property name="sizePolicy">

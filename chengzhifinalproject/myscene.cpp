@@ -2,7 +2,9 @@
 #include "qevent.h"
 #include <QGraphicsView>
 #include <QDebug>
-
+#include <vector>
+#include <QTimer>
+#define TIMER_TIMEOUT   (100)
 myScene::myScene(QObject *parent) : QGraphicsScene{parent}
 {
  //this->item= new myItem;
@@ -12,53 +14,72 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  //this->addItem(this->item);
  //item2->setPos(2000,20000);
  //this->addItem(item2);
- QString map = ":/img/maze3.png";
+    Num_enemies=20;
+    Num_healthpacks=20;
+    ratio=0.25;
+    Num_P_enemies= ratio*Num_enemies;
+ QString map = ":/img/worldmap.png";
  world = std::make_unique<World>();
- world->createWorld(map,20,20,0.0);
+ world->createWorld(map,20,20,0.25);
  enemies = world->getEnemies();
  tiles = world->getTiles();
  healthpacks = world->getHealthPacks();
  prot= world->getProtagonist();
  height = world->getRows() ;
  width = world->getCols();
+ flag=1;
+ attackFlag=1;
+ a=0;
+// this->setFocusItem(protpixmapItem);
 //QPoint cursorPoint;
 
-scalNum=10;
+scalNum=100;
 
 
 drawWorld(scalNum);
 
 }
+
 void myScene::keyPressEvent(QKeyEvent *event)
 {
-    float difficulty= checkwall(prot->getXPos()-1,prot->getYPos());
+    //float difficulty= checkwall(prot->getXPos()-1,prot->getYPos());
+if(event->key() == Qt::Key_J)
+{
+   attackTimeSignal();
+   qDebug()<<"jjjjjjjjjjjjjj";
+  }
 
 
-    if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
-       protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();}
+    else if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
+      userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();}
     else if (event->key() == Qt::Key_Left && !checkwall(prot->getXPos()-1,prot->getYPos())){
-       protpixmapItem ->moveBy(scalNum,0); prot->setXPos(prot->getXPos()+1);}
+      userMoveView(); protpixmapItem ->moveBy(scalNum,0); prot->setXPos(prot->getXPos()+1);
+    }
 
 
 
     else if (event->key() == Qt::Key_Right && checkwall(prot->getXPos()+1,prot->getYPos())) {// 向右移动
-       protpixmapItem ->moveBy(scalNum, 0); prot->setXPos(prot->getXPos()+1);emit moveViewSignal();}
+      userMoveView();protpixmapItem ->moveBy(scalNum, 0); prot->setXPos(prot->getXPos()+1);emit moveViewSignal();
+    }
     else if (event->key() == Qt::Key_Right  && !checkwall(prot->getXPos()+1,prot->getYPos())){
-       protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);}
+      userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);
+    }
 
 
 
 
     else if (event->key() == Qt::Key_Up && checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
-        protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);emit moveViewSignal();}
+       userMoveView(); protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);emit moveViewSignal();}
     else if (event->key() == Qt::Key_Up && !checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
-        protpixmapItem->moveBy(0, +scalNum);prot->setYPos(prot->getYPos()+1);}
+      userMoveView();  protpixmapItem->moveBy(0, +scalNum);prot->setYPos(prot->getYPos()+1);
+    }
 
 
-    else if (event->key() == Qt::Key_Down && checkwall(prot->getXPos()-1,prot->getYPos()+1)){ // 向下移动
-        protpixmapItem->moveBy(0, scalNum);prot->setYPos(prot->getYPos()+1);emit moveViewSignal();}
-    else if (event->key() == Qt::Key_Down && !checkwall(prot->getXPos()-1,prot->getYPos()+1)){ // 向下移动
-        protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);}
+    else if (event->key() == Qt::Key_Down && checkwall(prot->getXPos(),prot->getYPos()+1)){ // 向下移动
+      userMoveView();  protpixmapItem->moveBy(0, scalNum);prot->setYPos(prot->getYPos()+1);emit moveViewSignal();}
+    else if (event->key() == Qt::Key_Down && !checkwall(prot->getXPos(),prot->getYPos()+1)){ // 向下移动
+      userMoveView();  protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);
+    }
 }
 
 void myScene::drawWorld(int scalNum)
@@ -95,33 +116,48 @@ void myScene::drawWorld(int scalNum)
             this->addItem(rectItem);
         }
 
-
- /*   for ( auto enemy : enemies_temp )
-    {
-        if(getTile(enemy->getXPos(), enemy->getYPos())->getValue() != std::numeric_limits<float>::infinity()){
-            enemies.push_back( enemy );
-        }
-
-    }
-*/
-
-
+       int i = 0;
     for ( auto &enemy : enemies )
     {
+
         QPixmap pix;
-        pix.load(":/img/virus4.png");
+        pix.load(":/myimg/Soul11.png");
+        pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+
+        QPixmap ppix;
+        ppix.load(":/myimg/Skeleton21.png");
+        ppix=ppix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+
+
         QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem();
-        pixmapItem->setPixmap(pix);
-         pixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
-         pixmapItem->setZValue(1);
-         pixmapItem->grabKeyboard();
-         this->addItem(pixmapItem);
+
+        if(i< Num_enemies - Num_P_enemies)
+        {
+            pixmapItem->setPixmap(pix);
+            pixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
+            pixmapItem->setZValue(1);
+            this->addItem(pixmapItem);
+            i++;
+        }
+        else
+        {
+           // PEnemy p1;
+           // std::shared_ptr<PEnemy> newEnemy = std::move(enemy);
+           // PEnemies.push_back(enemy);
+            pixmapItem->setPixmap(ppix);
+            pixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
+            pixmapItem->setZValue(1);
+            this->addItem(pixmapItem);
+            i++;
+        }
+
     }
 
     for ( auto &healthpack : healthpacks)
     {
         QPixmap pix;
         pix.load(":/img/pill1.png");
+        pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
         QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem();
         pixmapItem->setPixmap(pix);
          pixmapItem->setPos(healthpack->getXPos()*scalNum, healthpack->getYPos()*scalNum);
@@ -129,19 +165,15 @@ void myScene::drawWorld(int scalNum)
          this->addItem(pixmapItem);
     }
     QPixmap pix;
-    pix.load(":/myimg/Run1.png");
+    pix.load(":/myimg/Run11.png");
+    pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
     protpixmapItem = new QGraphicsPixmapItem();
     protpixmapItem->setPixmap(pix);
     protpixmapItem->setPos(prot->getXPos()*scalNum, prot->getYPos()*scalNum);
     protpixmapItem->setZValue(1);
-     this->addItem(protpixmapItem);
- /*   for ( auto &hp : world->getHealthPacks() )
-    {
-        std::shared_ptr<Tile> newHp= std::move(hp);
-        healthpacks.push_back( newHp );
-    }
+    this->setFocusItem(protpixmapItem);
+    this->addItem(protpixmapItem);
 
-*/
 
 }
 
@@ -164,36 +196,66 @@ int myScene::getProtY()
 {
     return prot->getYPos();
 }
-/*
-void myScene::userMove()
+int myScene::getscalNum()
+{
+    return scalNum;
+}
+
+void myScene::userMoveView()
 
 {
-    static int speed = 10;
-    if(->state == userTank::moving){
-       QPointF srcPos = tank->pos();
+    QPixmap pix;
+    if (flag==1)
+    { pix.load(":/myimg/Run11.png"); flag++; }
+    else if (flag==2)
+    {pix.load(":/myimg/Run21.png"); flag++;}
+    else if (flag==3)
+    {pix.load(":/myimg/Run31.png"); flag++;}
+    else if (flag==4)
+    {pix.load(":/myimg/Run41.png"); flag=1;}
 
-       switch(tank->movedir){
-       case  userTank::down:
-           srcPos.setY(qMin(srcPos.y()+speed,scene->sceneRect().height()-tank->size.rheight()));
-           break;
-       case  userTank::up:
-           srcPos.setY(qMax(srcPos.y()-speed,0.0));
-           break;
-       case  userTank::right:
-           srcPos.setX(qMin(srcPos.x()+speed,scene->sceneRect().width()-tank->size.rwidth()));
-           break;
-       default:
-           srcPos.setX(qMax(srcPos.x()-speed,0.0));
-       }
-       //this->sc->getprot()->setPos(srcPos);
-       this->sc->prot->setPos(srcPos);
-
+     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+     protpixmapItem->setPixmap(pix);
    }
-   */
-//std::unique_ptr<Protagonist> myScene::getprot()
-//{
-   // return prot;
-//}
+
+void myScene::attack()
+{ QPixmap pix;
+    switch (attackFlag)
+    {
+    case 1: pix.load(":/myimg/combo/GavielG_Combo1.png");attackFlag++;break;
+    case 2: pix.load(":/myimg/combo/GavielG_Combo2.png");attackFlag++;break;
+    case 3: pix.load(":/myimg/combo/GavielG_Combo3.png");attackFlag++;break;
+    case 4: pix.load(":/myimg/combo/GavielG_Combo4.png");attackFlag++;break;
+    case 5: pix.load(":/myimg/combo/GavielG_Combo5.png");attackFlag++;break;
+    case 6: pix.load(":/myimg/combo/GavielG_Combo6.png");attackFlag++;break;
+    case 7: pix.load(":/myimg/combo/GavielG_Combo7.png");attackFlag++;break;
+    case 8: pix.load(":/myimg/combo/GavielG_Combo8.png");attackFlag++;break;
+    case 9: pix.load(":/myimg/combo/GavielG_Combo9.png");attackFlag=0;break;
+        default :pix.load(":/myimg/combo/GavielG_Combo1.png");break;
+    }
+    pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+    protpixmapItem->setPixmap(pix);
+}
+void myScene::attackTimeSignal()
+{QTimer *timer = new QTimer(this);
+    if (a==0)
+    {
+        qDebug()<<"ttttttttttttt";
+            connect(timer, SIGNAL(timeout()), this, SLOT(attack()));
+        timer->start(TIMER_TIMEOUT);qDebug()<<"ssssssssssss";a=1;
+    }
+    else
+        {
+             timer ->stop();
+        }
+
+
+    if(attackFlag==0) {
+        timer ->stop();
+        disconnect(timer, SIGNAL(timeout()), this, SLOT(attack()));
+        qDebug()<<"ppppppppppp";
+    }
+}
 
 /*
  * void myScene::drawWorld()

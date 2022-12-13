@@ -48,7 +48,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         gameview = new QGraphicsView(centralwidget);
         gameview->setObjectName("gameview");
-        gameview->setGeometry(QRect(160, 70, 471, 271));
+        gameview->setGeometry(QRect(10, 10, 1231, 601));
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(7);
         sizePolicy1.setVerticalStretch(0);

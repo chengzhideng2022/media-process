@@ -58,5 +58,34 @@
         <file>myimg/Run2.png</file>
         <file>myimg/Run3.png</file>
         <file>myimg/Run4.png</file>
+        <file>myimg/Run11.png</file>
+        <file>myimg/Run21.png</file>
+        <file>myimg/Run31.png</file>
+        <file>myimg/Run41.png</file>
+        <file>myimg/Skeleton_Attack21.png</file>
+        <file>myimg/Skeleton_die41.png</file>
+        <file>myimg/Skeleton21.png</file>
+        <file>myimg/Soul_attack31.png</file>
+        <file>myimg/Soul_die11.png</file>
+        <file>myimg/Soul11.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo1.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo2.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo3.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo4.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo5.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo6.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo7.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo8.png</file>
+        <file>../../../mnt/hgfs/kubuntu/myimg/combo/GavielG_Combo9.png</file>
+        <file>chengzhifinalproject_zh_CN.ts</file>
+        <file>myimg/combo/GavielG_Combo9.png</file>
+        <file>myimg/combo/GavielG_Combo8.png</file>
+        <file>myimg/combo/GavielG_Combo7.png</file>
+        <file>myimg/combo/GavielG_Combo6.png</file>
+        <file>myimg/combo/GavielG_Combo5.png</file>
+        <file>myimg/combo/GavielG_Combo4.png</file>
+        <file>myimg/combo/GavielG_Combo3.png</file>
+        <file>myimg/combo/GavielG_Combo2.png</file>
+        <file>myimg/combo/GavielG_Combo1.png</file>
     </qresource>
 </RCC>

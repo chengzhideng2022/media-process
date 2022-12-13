@@ -18,10 +18,13 @@ public:
     ~MainWindow();
     void wheelEvent(QWheelEvent *event);
     void getmousePressEvent(QMouseEvent *event);
-    void moveView(QKeyEvent *event);
+
+    void keyPressEvent(QKeyEvent *event);
     //void keyPressEvent(QKeyEvent *event);
  //   void keyReleaseEvent(QKeyEvent *event);
    // void userMove();
+private slots:
+   void moveView();
 private:
     Ui::MainWindow *ui;
     myScene *sc;

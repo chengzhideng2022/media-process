@@ -1,8 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QWheelEvent>
+#include <QKeyEvent>
 #include <QGraphicsView>
-
+#include <qdebug.h>
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -22,7 +23,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->sc = new myScene;
     this->ui->gameview->setScene(sc);
     this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
-    //connect(this->ui->gameview,);
+    this->ui->gameview->grabKeyboard();
+
+    //connect(this->ui->gameview-sc,SIGNAL(moveViewSignal()),this,SLOT(moveView()));
+     connect(this->sc,SIGNAL(moveViewSignal()),this,SLOT(moveView()));
 }
 
 MainWindow::~MainWindow()
@@ -57,7 +61,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
                      {
                          // 向上滚动，放大
                          if (wheelDeltaValue > 0.5)
-                         {
+                         {   qDebug()<<"testtetstets";
                              m_qrScaledNum=m_qrScaledNum*1.2;
                             this->ui->gameview->scale(1.2, 1.2);
 
@@ -65,7 +69,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
 
                          // 向下滚动，缩小
                          else  if (wheelDeltaValue < -0.5)
-                         {
+                         {qDebug()<<"testtetstets";
                               m_qrScaledNum=m_qrScaledNum/1.2;
                               this->ui->gameview->scale(1.0 / 1.2, 1.0 / 1.2);
 
@@ -96,11 +100,22 @@ void MainWindow::wheelEvent(QWheelEvent *event)
     //this->ui->gameview->verticalScrollBar()->setverticalScrollBar(int(cursorPoint.y() - viewHeight * vScale));
 }
 
-void MainWindow::moveView(QKeyEvent *event)
+void MainWindow::moveView()
 {
-    //  if (event->key() == Qt::Key_Left)
-
-           this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
+    int n = this->sc->getscalNum();
+     qDebug()<<"testtetstets";
+     int x = this->sc->getProtX();
+     qDebug()<<x;
+     int y = this->sc->getProtY();
+     qDebug()<<y;
+       // this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
+     this->ui->gameview->centerOn(x*n, y*n);
 
 }
-
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Down)
+    {
+       qDebug()<<"testtetstets";
+    }
+}
