@@ -1,31 +1,39 @@
 #include "mainwindow.h"
+#include "qmenubar.h"
 #include "ui_mainwindow.h"
 #include <QWheelEvent>
 #include <QKeyEvent>
 #include <QGraphicsView>
 #include <qdebug.h>
+#include <QToolBar>
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-  //  QPainter painter(this);
-   // QPixmap pix;
+    //创建一个菜单栏,最多可以有一个
+    QMenuBar *bar = menuBar();
+    //将菜单栏放入窗口中
+    QMenu *closeMenu = bar->addMenu("close");
+    //创建菜单项
+    closeMenu->addAction("close");
+    setMenuBar(bar);
+    QToolBar *toolBar = new QToolBar(this);
+    addToolBar(Qt::LeftToolBarArea,toolBar);
     m_qrScaledNum=1;
-    //this->ui->gameview->setDragMode(QGraphicsView::NoDrag);
+
     this->ui->gameview->setMouseTracking(true);
     //this->ui->gameview->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏水平条
     //this->ui->gameview->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏竖条
     this->ui->gameview->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     this->ui->gameview->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
-    //this->ui->gameview->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     this->sc = new myScene;
     this->ui->gameview->setScene(sc);
     this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
     this->ui->gameview->grabKeyboard();
-
-    //connect(this->ui->gameview-sc,SIGNAL(moveViewSignal()),this,SLOT(moveView()));
+    //showFullScreen();
+     showMaximized();
      connect(this->sc,SIGNAL(moveViewSignal()),this,SLOT(moveView()));
 }
 

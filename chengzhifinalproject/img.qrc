@@ -87,5 +87,34 @@
         <file>myimg/combo/GavielG_Combo3.png</file>
         <file>myimg/combo/GavielG_Combo2.png</file>
         <file>myimg/combo/GavielG_Combo1.png</file>
+        <file>myimg/skeleto/Skeleton_Attack1.png</file>
+        <file>myimg/skeleto/Skeleton_Attack2.png</file>
+        <file>myimg/skeleto/Skeleton_Attack3.png</file>
+        <file>myimg/skeleto/Skeleton_Attack4.png</file>
+        <file>myimg/skeleto/Skeleton_die1.png</file>
+        <file>myimg/skeleto/Skeleton_die2.png</file>
+        <file>myimg/skeleto/Skeleton_die3.png</file>
+        <file>myimg/skeleto/Skeleton_die4.png</file>
+        <file>myimg/skeleto/Skeleton_fly.png</file>
+        <file>myimg/skeleto/Skeleton_Idle1.png</file>
+        <file>myimg/skeleto/Skeleton_Idle2.png</file>
+        <file>myimg/skeleto/Skeleton_Idle3.png</file>
+        <file>myimg/skeleto/Skeleton_Idle4.png</file>
+        <file>myimg/skeleto/Skeleton_walk1.png</file>
+        <file>myimg/skeleto/Skeleton_walk2.png</file>
+        <file>myimg/skeleto/Skeleton_walk3.png</file>
+        <file>myimg/skeleto/Skeleton_walk4.png</file>
+        <file>myimg/soul/Soul3.png</file>
+        <file>myimg/soul/Soul2.png</file>
+        <file>myimg/soul/Soul1.png</file>
+        <file>myimg/soul/Soul_fly.png</file>
+        <file>myimg/soul/Soul_die4.png</file>
+        <file>myimg/soul/Soul_die3.png</file>
+        <file>myimg/soul/Soul_die2.png</file>
+        <file>myimg/soul/Soul_die1.png</file>
+        <file>myimg/soul/Soul_attack4.png</file>
+        <file>myimg/soul/Soul_attack3.png</file>
+        <file>myimg/soul/Soul_attack2.png</file>
+        <file>myimg/soul/Soul_attack1.png</file>
     </qresource>
 </RCC>

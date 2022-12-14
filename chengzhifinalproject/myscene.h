@@ -15,10 +15,14 @@ void userMoveView();
 
 void keyPressEvent(QKeyEvent *event);
 float checkwall(int x, int y);
+int checkIsEnemy(int x, int y);
 int getProtX();
 int getProtY();
 int getscalNum();
+void showEnemyAttack();
+void showPEnemyAttack();
 
+void showPEnemydie();
 
 
 public slots:
@@ -27,8 +31,11 @@ void attack();
 
 signals:
 void moveViewSignal();
+
 public slots:
 void attackTimeSignal();
+void enemyDieSignal();
+void showEnemydie();
 //void moveView();
 
 private:
@@ -41,13 +48,19 @@ private:
  int Num_P_enemies;
  int flag;
  int attackFlag;
+ int soulFlag;
  float ratio;
  int a;
+ QTimer *timer;
+ QTimer *timersoul;
  std::unique_ptr<World> world;
  std::vector<std::unique_ptr<Tile>> tiles;
 QImage bg;
 QGraphicsPixmapItem *protpixmapItem;
+QGraphicsPixmapItem *enemypixmapItem;
 QPixmap pm;
+std::vector<int> PEnemiesX;
+std::vector<int> PEnemiesY;
 std::unique_ptr<Protagonist> prot;
 std::array<std::unique_ptr<Protagonist>,4> protList;
 std::vector<std::unique_ptr<Enemy>> enemies_temp;

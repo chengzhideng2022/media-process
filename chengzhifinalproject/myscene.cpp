@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <vector>
 #include <QTimer>
+#include<bits/stdc++.h>
 #define TIMER_TIMEOUT   (100)
 myScene::myScene(QObject *parent) : QGraphicsScene{parent}
 {
@@ -29,23 +30,29 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  width = world->getCols();
  flag=1;
  attackFlag=1;
+ soulFlag=1;
  a=0;
 // this->setFocusItem(protpixmapItem);
 //QPoint cursorPoint;
 
 scalNum=100;
-
-
+timer = new QTimer(this);
+timersoul = new QTimer(this);
 drawWorld(scalNum);
 
 }
 
 void myScene::keyPressEvent(QKeyEvent *event)
 {
-    //float difficulty= checkwall(prot->getXPos()-1,prot->getYPos());
+
 if(event->key() == Qt::Key_J)
 {
    attackTimeSignal();
+   if(checkIsEnemy(prot->getXPos(),prot->getYPos()))
+   {
+      enemyDieSignal();qDebug()<<"111111111111";
+   }
+
    qDebug()<<"jjjjjjjjjjjjjj";
   }
 
@@ -129,14 +136,16 @@ void myScene::drawWorld(int scalNum)
         ppix=ppix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
 
 
-        QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem();
+        enemypixmapItem = new QGraphicsPixmapItem();
+
+        qDebug()<<QString::fromStdString(enemy->serialize());
 
         if(i< Num_enemies - Num_P_enemies)
         {
-            pixmapItem->setPixmap(pix);
-            pixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
-            pixmapItem->setZValue(1);
-            this->addItem(pixmapItem);
+            enemypixmapItem->setPixmap(pix);
+            enemypixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
+            enemypixmapItem->setZValue(1);
+            this->addItem(enemypixmapItem);
             i++;
         }
         else
@@ -144,10 +153,10 @@ void myScene::drawWorld(int scalNum)
            // PEnemy p1;
            // std::shared_ptr<PEnemy> newEnemy = std::move(enemy);
            // PEnemies.push_back(enemy);
-            pixmapItem->setPixmap(ppix);
-            pixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
-            pixmapItem->setZValue(1);
-            this->addItem(pixmapItem);
+            enemypixmapItem->setPixmap(ppix);
+            enemypixmapItem->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
+            enemypixmapItem->setZValue(1);
+            this->addItem(enemypixmapItem);
             i++;
         }
 
@@ -230,33 +239,61 @@ void myScene::attack()
     case 6: pix.load(":/myimg/combo/GavielG_Combo6.png");attackFlag++;break;
     case 7: pix.load(":/myimg/combo/GavielG_Combo7.png");attackFlag++;break;
     case 8: pix.load(":/myimg/combo/GavielG_Combo8.png");attackFlag++;break;
-    case 9: pix.load(":/myimg/combo/GavielG_Combo9.png");attackFlag=0;break;
-        default :pix.load(":/myimg/combo/GavielG_Combo1.png");break;
+    case 9: pix.load(":/myimg/combo/GavielG_Combo9.png");attackFlag=0;timer ->stop();break;
+    default :pix.load(":/myimg/combo/GavielG_Combo9.png");attackFlag++; timer->start(TIMER_TIMEOUT);break;
     }
     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
     protpixmapItem->setPixmap(pix);
 }
 void myScene::attackTimeSignal()
-{QTimer *timer = new QTimer(this);
-    if (a==0)
-    {
-        qDebug()<<"ttttttttttttt";
-            connect(timer, SIGNAL(timeout()), this, SLOT(attack()));
-        timer->start(TIMER_TIMEOUT);qDebug()<<"ssssssssssss";a=1;
-    }
-    else
-        {
-             timer ->stop();
-        }
+{
+   connect(timer, SIGNAL(timeout()), this, SLOT(attack()));
+   timer->start(TIMER_TIMEOUT);
 
-
-    if(attackFlag==0) {
-        timer ->stop();
-        disconnect(timer, SIGNAL(timeout()), this, SLOT(attack()));
-        qDebug()<<"ppppppppppp";
-    }
+}
+void myScene::enemyDieSignal()
+{
+   connect(timersoul, SIGNAL(timeout()), this, SLOT(showEnemydie()));
+   timersoul->start(TIMER_TIMEOUT);
 }
 
+int myScene::checkIsEnemy(int x, int y)
+{
+    x=prot->getXPos();
+    y=prot->getYPos();
+     for ( auto &enemy : enemies )
+     {
+         if((x==enemy->getXPos()-1)&&(y==enemy->getYPos())){
+            return enemy->getValue(); qDebug()<<enemy->getValue()<<"xxxxxxxxxxxxx";
+         }
+         else if((x==enemy->getXPos())&&(y==enemy->getYPos()))
+         {
+            return enemy->getValue(); qDebug()<<enemy->getValue()<<"xxxxxxxxxxxxx";
+         }
+
+     }
+     return 0;
+}
+void myScene::showEnemydie(){
+     QPixmap pix;
+      qDebug()<<"kkkkkkkkkkkk";
+     switch (soulFlag)
+     {
+     case 1: pix.load(":/myimg/soul/Soul_die1.png");soulFlag++;break;
+     case 2: pix.load(":/myimg/soul/Soul_die2.png");soulFlag++;break;
+     case 3: pix.load(":/myimg/soul/Soul_die3.png");soulFlag++;break;
+     case 4: pix.load(":/myimg/soul/Soul_die4.png");soulFlag++;break;
+     case 5: pix.load("::/myimg/soul/Soul_fly.png");soulFlag=0;timersoul->stop();break;
+     default :pix.load(":/myimg/soul/Soul_fly.png");soulFlag++; timersoul->start(TIMER_TIMEOUT);break;
+     }
+     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+     //QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem();
+     enemypixmapItem=new QGraphicsPixmapItem();
+     enemypixmapItem->setPixmap(pix);
+     enemypixmapItem->setPos((prot->getXPos()+1)*scalNum, prot->getYPos()*scalNum);
+     enemypixmapItem->setZValue(1);
+     this->addItem(enemypixmapItem);
+}
 /*
  * void myScene::drawWorld()
 {
