@@ -16,6 +16,7 @@ void userMoveView();
 void keyPressEvent(QKeyEvent *event);
 float checkwall(int x, int y);
 int checkIsEnemy(int x, int y);
+int checkIsHealthBag(int x, int y);
 int getProtX();
 int getProtY();
 int getscalNum();
@@ -56,7 +57,7 @@ private:
  int soulFlag,skeletonFlag,showUseHealthBagFlag;
  float ratio;
  int a;
- int index_enemy;
+ int index_enemy,index_healthBag;
  //std::unordered_map<int, Enemy> enemiesList;
  QTimer *timer;
  QTimer *timersoul,*timerSkeleton,*timerUseHealth;

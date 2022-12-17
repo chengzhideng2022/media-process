@@ -16,7 +16,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  //this->addItem(this->item);
  //item2->setPos(2000,20000);
  //this->addItem(item2);
-    index_enemy=0;
+    index_enemy=0;index_healthBag=0;
     Num_enemies=10;
     Num_healthpacks=1;
     ratio=0;
@@ -58,17 +58,22 @@ if(event->key() == Qt::Key_J)
    if(index_enemy != -1)
    {
        if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {
-       PEnemyDieSignal();qDebug()<<"111111111111";
+       PEnemyDieSignal();
        }
        else
        { enemyDieSignal();}
-       }
+   }
 
    qDebug()<<"jjjjjjjjjjjjjj";
   }
 if(event->key() == Qt::Key_K)
 {
-   useHealthSignal();
+   index_healthBag=checkIsHealthBag(prot->getXPos(),prot->getYPos());
+   if(index_healthBag != -1)
+   {
+      useHealthSignal();
+   }
+
    qDebug()<<"kkkkkkkkkk";
   }
 
@@ -289,6 +294,32 @@ int myScene::checkIsEnemy(int x, int y)
 
      return -1;
 }
+
+int myScene::checkIsHealthBag(int x, int y)
+{
+    x=prot->getXPos();
+    y=prot->getYPos();
+    int i=0;
+     for ( auto &healthpack : healthpacks)
+     {
+         if((x==healthpack->getXPos()-1)&&(y==healthpack->getYPos())){
+            return i;
+         }
+       i++;
+     }
+     int j=0;
+     for ( auto &healthpack : healthpacks )
+     {
+         if((x==healthpack->getXPos())&&(y==healthpack->getYPos())){
+            return j;
+         }
+       j++;
+     }
+
+     return -1;
+
+}
+
 void myScene::showEnemydie(){
      QPixmap pix;
 
