@@ -69,7 +69,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
                      {
                          // 向上滚动，放大
                          if (wheelDeltaValue > 0.5)
-                         {   qDebug()<<"testtetstets";
+                         {
                              m_qrScaledNum=m_qrScaledNum*1.2;
                             this->ui->gameview->scale(1.2, 1.2);
 
@@ -77,7 +77,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
 
                          // 向下滚动，缩小
                          else  if (wheelDeltaValue < -0.5)
-                         {qDebug()<<"testtetstets";
+                         {
                               m_qrScaledNum=m_qrScaledNum/1.2;
                               this->ui->gameview->scale(1.0 / 1.2, 1.0 / 1.2);
 
@@ -111,7 +111,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
 void MainWindow::moveView()
 {
     int n = this->sc->getscalNum();
-     qDebug()<<"testtetstets";
+
      int x = this->sc->getProtX();
      qDebug()<<x;
      int y = this->sc->getProtY();
@@ -120,10 +120,4 @@ void MainWindow::moveView()
      this->ui->gameview->centerOn(x*n, y*n);
 
 }
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_Down)
-    {
-       qDebug()<<"testtetstets";
-    }
-}
+

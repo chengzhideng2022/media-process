@@ -116,5 +116,6 @@
         <file>myimg/soul/Soul_attack3.png</file>
         <file>myimg/soul/Soul_attack2.png</file>
         <file>myimg/soul/Soul_attack1.png</file>
+        <file>myimg/soul/die5.png</file>
     </qresource>
 </RCC>

@@ -1,6 +1,6 @@
 #ifndef MYSCENE_H
 #define MYSCENE_H
-
+#include <map>
 #include "myitem.h"
 #include <QObject>
 #include <QGraphicsScene>
@@ -22,7 +22,7 @@ int getscalNum();
 void showEnemyAttack();
 void showPEnemyAttack();
 
-void showPEnemydie();
+
 
 
 public slots:
@@ -34,8 +34,9 @@ void moveViewSignal();
 
 public slots:
 void attackTimeSignal();
-void enemyDieSignal();
+void enemyDieSignal(int index);
 void showEnemydie();
+void showPEnemydie();
 //void moveView();
 
 private:
@@ -51,13 +52,15 @@ private:
  int soulFlag;
  float ratio;
  int a;
+ int index_enemy;
+ //std::unordered_map<int, Enemy> enemiesList;
  QTimer *timer;
  QTimer *timersoul;
  std::unique_ptr<World> world;
  std::vector<std::unique_ptr<Tile>> tiles;
 QImage bg;
 QGraphicsPixmapItem *protpixmapItem;
-QGraphicsPixmapItem *enemypixmapItem;
+QGraphicsPixmapItem *enemypixmapItem[5];
 QPixmap pm;
 std::vector<int> PEnemiesX;
 std::vector<int> PEnemiesY;

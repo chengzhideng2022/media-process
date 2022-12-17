@@ -19,7 +19,7 @@ public:
     void wheelEvent(QWheelEvent *event);
     void getmousePressEvent(QMouseEvent *event);
 
-    void keyPressEvent(QKeyEvent *event);
+
     //void keyPressEvent(QKeyEvent *event);
  //   void keyReleaseEvent(QKeyEvent *event);
    // void userMove();
