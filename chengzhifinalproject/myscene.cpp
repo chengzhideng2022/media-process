@@ -33,6 +33,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  flag=1;
  attackFlag=1;
  soulFlag=1;
+ skeletonFlag=1;
  a=0;
 // this->setFocusItem(protpixmapItem);
 //QPoint cursorPoint;
@@ -40,6 +41,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
 scalNum=100;
 timer = new QTimer(this);
 timersoul = new QTimer(this);
+timerSkeleton = new QTimer(this);
 drawWorld(scalNum);
 
 }
@@ -53,8 +55,13 @@ if(event->key() == Qt::Key_J)
    index_enemy=checkIsEnemy(prot->getXPos(),prot->getYPos());
    if(index_enemy != -1)
    {
-      enemyDieSignal(index_enemy);qDebug()<<"111111111111";
-   }
+       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {
+       PEnemyDieSignal();qDebug()<<"111111111111";
+       }
+       else
+       { enemyDieSignal();}
+
+       }
 
    qDebug()<<"jjjjjjjjjjjjjj";
   }
@@ -98,10 +105,6 @@ void myScene::drawWorld(int scalNum)
     int rows = height;
     int cols = width;
 
-
-
-
-
     // 动态分配一个 rows * cols 大小的数组
     array = new float*[rows];
     for (int i = 0; i < rows; i++) {
@@ -143,6 +146,7 @@ void myScene::drawWorld(int scalNum)
         else
         {
            pix.load(":/myimg/Skeleton21.png");
+           PEnemyIndex.push_back(i);
         }
 
             pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
@@ -242,13 +246,18 @@ void myScene::attackTimeSignal()
    timer->start(TIMER_TIMEOUT);
 
 }
-void myScene::enemyDieSignal(int index)
+void myScene::enemyDieSignal()
 {
   qDebug()<<"3333333333";
    connect(timersoul, SIGNAL(timeout()), this, SLOT(showEnemydie()));
    timersoul->start(TIMER_TIMEOUT);
 }
-
+void myScene::PEnemyDieSignal()
+{
+  qDebug()<<"3333333333";
+   connect(timerSkeleton, SIGNAL(timeout()), this, SLOT(showPEnemydie()));
+   timerSkeleton->start(TIMER_TIMEOUT);
+}
 int myScene::checkIsEnemy(int x, int y)
 {
     x=prot->getXPos();
@@ -274,8 +283,7 @@ int myScene::checkIsEnemy(int x, int y)
 }
 void myScene::showEnemydie(){
      QPixmap pix;
-      qDebug()<<"kkkkkkkkkkkk";
-      qDebug()<<index_enemy<<"indexindexinedx";
+
      switch (soulFlag)
      {
      case 1: pix.load(":/myimg/soul/Soul_fly.png");soulFlag++;break;
@@ -295,15 +303,14 @@ void myScene::showPEnemydie(){
      QPixmap pix;
       qDebug()<<"kkkkkkkkkkkk";
       qDebug()<<index_enemy<<"indexindexinedx";
-     switch (soulFlag)
+     switch (skeletonFlag)
      {
-     case 1: pix.load(":/myimg/skeleto/Skeleton_fly.png");soulFlag++;break;
-     case 2: pix.load(":/myimg/skeleto/Skeleton_die1.png");soulFlag++;break;
-     case 3: pix.load(":/myimg/skeleto/Skeleton_die2.png");soulFlag++;break;
-     case 4: pix.load(":/myimg/skeleto/Skeleton_die3.png");soulFlag++;break;
-     case 5: pix.load(":/myimg/skeleto/Skeleton_die4.png");soulFlag++;break;
-     case 6: pix.load(":/myimg/skeleto/Skeleton_fly.png");soulFlag=0;timersoul->stop();
-     default :pix.load(":/myimg/soul/Soul_fly.png");soulFlag++; timersoul->start(TIMER_TIMEOUT);break;
+     case 1: pix.load(":/myimg/skeleto/Skeleton_fly.png");skeletonFlag++;break;
+     case 2: pix.load(":/myimg/skeleto/Skeleton_die1.png");skeletonFlag++;break;
+     case 3: pix.load(":/myimg/skeleto/Skeleton_die2.png");skeletonFlag++;break;
+     case 4: pix.load(":/myimg/skeleto/Skeleton_die3.png");skeletonFlag++;break;
+     case 5: pix.load(":/myimg/skeleto/Skeleton_die4.png"); skeletonFlag=0;timerSkeleton->stop();break;
+     default :pix.load(":/myimg/skeleto/Skeleton_fly.png");skeletonFlag++; timerSkeleton->start(TIMER_TIMEOUT);break;
      }
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
 
