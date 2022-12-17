@@ -117,5 +117,23 @@
         <file>myimg/soul/Soul_attack2.png</file>
         <file>myimg/soul/Soul_attack1.png</file>
         <file>myimg/soul/die5.png</file>
+        <file>myimg/Die/GavielG_Die5.png</file>
+        <file>myimg/Die/GavielG_Die4.png</file>
+        <file>myimg/Die/GavielG_Die3.png</file>
+        <file>myimg/Die/GavielG_Die2.png</file>
+        <file>myimg/Die/GavielG_Die1.png</file>
+        <file>myimg/Buff/GavielG_Buff5.png</file>
+        <file>myimg/Buff/GavielG_Buff4.png</file>
+        <file>myimg/Buff/GavielG_Buff3.png</file>
+        <file>myimg/Buff/GavielG_Buff2.png</file>
+        <file>myimg/Buff/GavielG_Buff1.png</file>
+        <file>myimg/Accumulate/GavielG_Accu6.png</file>
+        <file>myimg/Accumulate/GavielG_Accu5.png</file>
+        <file>myimg/Accumulate/GavielG_Accu4.png</file>
+        <file>myimg/Accumulate/GavielG_Accu3.png</file>
+        <file>myimg/Accumulate/GavielG_Accu2.png</file>
+        <file>myimg/Accumulate/GavielG_Accu1.png</file>
+        <file>myimg/Accumulate/Angel Feature2.png</file>
+        <file>myimg/Accumulate/Angel Feature1.png</file>
     </qresource>
 </RCC>

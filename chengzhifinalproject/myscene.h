@@ -36,8 +36,11 @@ public slots:
 void attackTimeSignal();
 void enemyDieSignal();
 void PEnemyDieSignal();
+void useHealthSignal();
+
 void showEnemydie();
 void showPEnemydie();
+void showUseHealthBag();
 //void moveView();
 
 private:
@@ -50,13 +53,13 @@ private:
  int Num_P_enemies;
  int flag;
  int attackFlag;
- int soulFlag,skeletonFlag;
+ int soulFlag,skeletonFlag,showUseHealthBagFlag;
  float ratio;
  int a;
  int index_enemy;
  //std::unordered_map<int, Enemy> enemiesList;
  QTimer *timer;
- QTimer *timersoul,*timerSkeleton;
+ QTimer *timersoul,*timerSkeleton,*timerUseHealth;
  std::unique_ptr<World> world;
  std::vector<std::unique_ptr<Tile>> tiles;
 QImage bg;

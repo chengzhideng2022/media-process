@@ -34,6 +34,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  attackFlag=1;
  soulFlag=1;
  skeletonFlag=1;
+ showUseHealthBagFlag=1;
  a=0;
 // this->setFocusItem(protpixmapItem);
 //QPoint cursorPoint;
@@ -42,6 +43,7 @@ scalNum=100;
 timer = new QTimer(this);
 timersoul = new QTimer(this);
 timerSkeleton = new QTimer(this);
+timerUseHealth = new QTimer(this);
 drawWorld(scalNum);
 
 }
@@ -60,12 +62,15 @@ if(event->key() == Qt::Key_J)
        }
        else
        { enemyDieSignal();}
-
        }
 
    qDebug()<<"jjjjjjjjjjjjjj";
   }
-
+if(event->key() == Qt::Key_K)
+{
+   useHealthSignal();
+   qDebug()<<"kkkkkkkkkk";
+  }
 
     else if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
       userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();}
@@ -248,15 +253,18 @@ void myScene::attackTimeSignal()
 }
 void myScene::enemyDieSignal()
 {
-  qDebug()<<"3333333333";
    connect(timersoul, SIGNAL(timeout()), this, SLOT(showEnemydie()));
    timersoul->start(TIMER_TIMEOUT);
 }
 void myScene::PEnemyDieSignal()
 {
-  qDebug()<<"3333333333";
    connect(timerSkeleton, SIGNAL(timeout()), this, SLOT(showPEnemydie()));
    timerSkeleton->start(TIMER_TIMEOUT);
+}
+void myScene::useHealthSignal()
+{
+    connect(timerUseHealth, SIGNAL(timeout()), this, SLOT(showUseHealthBag()));
+    timerUseHealth->start(TIMER_TIMEOUT);
 }
 int myScene::checkIsEnemy(int x, int y)
 {
@@ -301,7 +309,6 @@ void myScene::showEnemydie(){
 }
 void myScene::showPEnemydie(){
      QPixmap pix;
-      qDebug()<<"kkkkkkkkkkkk";
       qDebug()<<index_enemy<<"indexindexinedx";
      switch (skeletonFlag)
      {
@@ -313,10 +320,29 @@ void myScene::showPEnemydie(){
      default :pix.load(":/myimg/skeleto/Skeleton_fly.png");skeletonFlag++; timerSkeleton->start(TIMER_TIMEOUT);break;
      }
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
-
      enemypixmapItem[index_enemy]->setPixmap(pix);
 }
+void myScene::showUseHealthBag(){
+     QPixmap pix;
 
+     switch (showUseHealthBagFlag)
+     {
+     case 1: pix.load(":/myimg/Accumulate/Angel Feature1.pngg");showUseHealthBagFlag++;break;
+     case 2: pix.load(":/myimg/Accumulate/Angel Feature2.png");showUseHealthBagFlag++;break;
+     case 3: pix.load(":/myimg/Accumulate/GavielG_Accu1.png");showUseHealthBagFlag++;break;
+     case 4: pix.load(":/myimg/Accumulate/GavielG_Accu2.png");showUseHealthBagFlag++;break;
+     case 5: pix.load(":/myimg/Accumulate/GavielG_Accu3.png");showUseHealthBagFlag++;break;
+     case 6: pix.load(":/myimg/Accumulate/GavielG_Accu4.png");showUseHealthBagFlag++;break;
+     case 7: pix.load(":/myimg/Accumulate/GavielG_Accu5.png");showUseHealthBagFlag++;break;
+     case 8: pix.load(":/myimg/Accumulate/GavielG_Accu6.png");showUseHealthBagFlag++;break;
+     case 9: pix.load(":/myimg/Buff/GavielG_Buff1.png");showUseHealthBagFlag=0;timerUseHealth->stop();break;
+     default :pix.load(":/myimg/Buff/GavielG_Buff1.png");showUseHealthBagFlag++; timerUseHealth->start(TIMER_TIMEOUT);break;
+     }
+     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+
+     protpixmapItem->setPixmap(pix);
+
+}
 /*
  * void myScene::drawWorld()
 {
