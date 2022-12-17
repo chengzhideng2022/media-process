@@ -65,7 +65,8 @@ private:
  std::vector<std::unique_ptr<Tile>> tiles;
 QImage bg;
 QGraphicsPixmapItem *protpixmapItem;
-QGraphicsPixmapItem *enemypixmapItem[5];
+QGraphicsPixmapItem *enemypixmapItem[20];
+QGraphicsPixmapItem *healthpixmapItem[20];
 QPixmap pm;
 std::vector<int> PEnemiesX;
 std::vector<int> PEnemiesY;

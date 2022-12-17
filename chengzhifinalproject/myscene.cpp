@@ -18,12 +18,12 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  //this->addItem(item2);
     index_enemy=0;index_healthBag=0;
     Num_enemies=10;
-    Num_healthpacks=1;
-    ratio=0;
+    Num_healthpacks=10;
+    ratio=0.5;
     Num_P_enemies= ratio*Num_enemies;
  QString map = ":/img/worldmap.png";
  world = std::make_unique<World>();
- world->createWorld(map,Num_enemies,Num_healthpacks,0.5);
+ world->createWorld(map,Num_enemies,Num_healthpacks,ratio);
  enemies = world->getEnemies();
  tiles = world->getTiles();
  healthpacks = world->getHealthPacks();
@@ -166,17 +166,17 @@ void myScene::drawWorld(int scalNum)
             enemypixmapItem[i]->setZValue(1);
             this->addItem(enemypixmapItem[i]);
     }
-
+      int j=0;
     for ( auto &healthpack : healthpacks)
     {
         QPixmap pix;
         pix.load(":/img/pill1.png");
         pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
-        QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem();
-        pixmapItem->setPixmap(pix);
-         pixmapItem->setPos(healthpack->getXPos()*scalNum, healthpack->getYPos()*scalNum);
-         pixmapItem->setZValue(1);
-         this->addItem(pixmapItem);
+         healthpixmapItem[j] = new QGraphicsPixmapItem();
+         healthpixmapItem[j]->setPixmap(pix);
+         healthpixmapItem[j]->setPos(healthpack->getXPos()*scalNum, healthpack->getYPos()*scalNum);
+         healthpixmapItem[j]->setZValue(1);
+         this->addItem(healthpixmapItem[j]);
     }
     QPixmap pix;
     pix.load(":/myimg/Run11.png");
