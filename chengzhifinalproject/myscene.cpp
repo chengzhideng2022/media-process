@@ -126,46 +126,31 @@ void myScene::drawWorld(int scalNum)
             this->addItem(rectItem);
         }
 
-       int i = 0;int j=0;
+       int i = 0;
     for ( auto &enemy : enemies )
     {
-  i++;
+        i++;
         QPixmap pix;
-        pix.load(":/myimg/Soul11.png");
-        pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
 
-        QPixmap ppix;
-        ppix.load(":/myimg/Skeleton21.png");
-        ppix=ppix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
-
-      //  enemiesList[i]=move(enemy);
-
-
-        enemypixmapItem[i] = new QGraphicsPixmapItem();
         qDebug()<<QString::fromStdString(enemy->serialize());
         qDebug()<<(QString::fromStdString(enemy->serialize())).split(',').length()-1;
         int numberOfparameter =(QString::fromStdString(enemy->serialize())).split(',').length()-1;
 
-        if(j< Num_enemies - Num_P_enemies)
+        if(numberOfparameter==3)
         {
+           pix.load(":/myimg/Soul11.png");
+        }
+        else
+        {
+           pix.load(":/myimg/Skeleton21.png");
+        }
+
+            pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+            enemypixmapItem[i] = new QGraphicsPixmapItem();
             enemypixmapItem[i]->setPixmap(pix);
             enemypixmapItem[i]->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
             enemypixmapItem[i]->setZValue(1);
             this->addItem(enemypixmapItem[i]);
-            j++;
-        }
-        else
-        {
-           // PEnemy p1;
-           // std::shared_ptr<PEnemy> newEnemy = std::move(enemy);
-           // PEnemies.push_back(enemy);
-            enemypixmapItem[i]->setPixmap(ppix);
-            enemypixmapItem[i]->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
-            enemypixmapItem[i]->setZValue(1);
-            this->addItem(enemypixmapItem[i]);
-            i++;
-        }
-
     }
 
     for ( auto &healthpack : healthpacks)
