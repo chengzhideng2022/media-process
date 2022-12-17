@@ -51,7 +51,7 @@ if(event->key() == Qt::Key_J)
 {
    attackTimeSignal();
    index_enemy=checkIsEnemy(prot->getXPos(),prot->getYPos());
-   if(index_enemy)
+   if(index_enemy != -1)
    {
       enemyDieSignal(index_enemy);qDebug()<<"111111111111";
    }
@@ -126,7 +126,7 @@ void myScene::drawWorld(int scalNum)
             this->addItem(rectItem);
         }
 
-       int i = 0;
+       int i = -1;
     for ( auto &enemy : enemies )
     {
         i++;
@@ -253,7 +253,7 @@ int myScene::checkIsEnemy(int x, int y)
 {
     x=prot->getXPos();
     y=prot->getYPos();
-    int i=1;
+    int i=0;
      for ( auto &enemy : enemies )
      {
          if((x==enemy->getXPos()-1)&&(y==enemy->getYPos())){
@@ -265,12 +265,12 @@ int myScene::checkIsEnemy(int x, int y)
      for ( auto &enemy : enemies )
      {
          if((x==enemy->getXPos())&&(y==enemy->getYPos())){
-            return j+1;
+            return j;
          }
        j++;
      }
 
-     return 0;
+     return -1;
 }
 void myScene::showEnemydie(){
      QPixmap pix;
