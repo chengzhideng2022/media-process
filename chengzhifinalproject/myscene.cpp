@@ -18,7 +18,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  //this->addItem(item2);
     index_enemy=0;index_healthBag=0;
     Num_enemies=10;
-    Num_healthpacks=10;
+    Num_healthpacks=3;
     ratio=0.5;
     Num_P_enemies= ratio*Num_enemies;
  QString map = ":/img/worldmap.png";
@@ -45,7 +45,7 @@ timersoul = new QTimer(this);
 timerSkeleton = new QTimer(this);
 timerUseHealth = new QTimer(this);
 drawWorld(scalNum);
-
+setItemIndexMethod(QGraphicsScene::NoIndex);
 }
 
 void myScene::keyPressEvent(QKeyEvent *event)
@@ -71,6 +71,12 @@ if(event->key() == Qt::Key_K)
    index_healthBag=checkIsHealthBag(prot->getXPos(),prot->getYPos());
    if(index_healthBag != -1)
    {
+       qDebug()<<index_healthBag<<"indexindexinedx";
+       QPixmap pix;
+       pix.load(":/myimg/soul/Soul_die5.png");
+      // pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+      // this->removeItem(healthpixmapItem[index_healthBag]);
+       healthpixmapItem[index_healthBag]->setPixmap(pix);
       useHealthSignal();
    }
 
@@ -169,6 +175,7 @@ void myScene::drawWorld(int scalNum)
       int j=0;
     for ( auto &healthpack : healthpacks)
     {
+
         QPixmap pix;
         pix.load(":/img/pill1.png");
         pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
@@ -177,6 +184,7 @@ void myScene::drawWorld(int scalNum)
          healthpixmapItem[j]->setPos(healthpack->getXPos()*scalNum, healthpack->getYPos()*scalNum);
          healthpixmapItem[j]->setZValue(1);
          this->addItem(healthpixmapItem[j]);
+         j++;
     }
     QPixmap pix;
     pix.load(":/myimg/Run11.png");
@@ -305,15 +313,15 @@ int myScene::checkIsHealthBag(int x, int y)
          if((x==healthpack->getXPos()-1)&&(y==healthpack->getYPos())){
             return i;
          }
-       i++;
+      i++;
      }
-     int j=0;
+     int j= 0;
      for ( auto &healthpack : healthpacks )
      {
          if((x==healthpack->getXPos())&&(y==healthpack->getYPos())){
             return j;
          }
-       j++;
+   j++;
      }
 
      return -1;
