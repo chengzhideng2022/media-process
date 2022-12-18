@@ -6,7 +6,7 @@
 #include <QTimer>
 #include<bits/stdc++.h>
 #include <map>
-#define TIMER_TIMEOUT   (1000)
+#define TIMER_TIMEOUT   (500)
 myScene::myScene(QObject *parent) : QGraphicsScene{parent}
 {
  //this->item= new myItem;
@@ -58,7 +58,7 @@ if(event->key() == Qt::Key_J)
    if(index_enemy != -1)
    {
        if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {
-       PEnemyDieSignal();
+       PEnemyDieSignal();//showEffectOfPoisoning();qDebug()<<"gggggggggggg";
        }
        else
        { enemyDieSignal();}
@@ -150,9 +150,9 @@ void myScene::drawWorld(int scalNum)
     {
         i++;
         QPixmap pix;
-
         qDebug()<<QString::fromStdString(enemy->serialize());
         qDebug()<<(QString::fromStdString(enemy->serialize())).split(',').length()-1;
+       // qDebug()<<stringArray[0]<<"yyyyyyyyy"<<stringArray[1]<<"yyyyyyyyy"<<stringArray[2]<<"yyyyyyyyy"<<stringArray[3]<<"yyyyyyyyy";
         int numberOfparameter =(QString::fromStdString(enemy->serialize())).split(',').length()-1;
 
         if(numberOfparameter==3)
@@ -161,8 +161,21 @@ void myScene::drawWorld(int scalNum)
         }
         else
         {
+           QVector<QString> stringArray(5);
+           stringArray=(QString::fromStdString(enemy->serialize())).split(',');
+           int x=stringArray[0].toInt(0);
+           int y=stringArray[1].toInt(0);
+           int s=stringArray[2].toInt(0);
+           int d=stringArray[3].toInt(0);
+           int p=stringArray[4].toInt(0);
            pix.load(":/myimg/Skeleton21.png");
            PEnemyIndex.push_back(i);
+          /*
+           PEnemy *PEnemy_temp = new PEnemy(x,y,s);
+           PEnemy_temp->setDefeated(d);
+           PEnemy_temp->setPoisonLevel(p);
+           PEnemies->push_back(*PEnemy_temp);
+           */
         }
 
             pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
@@ -355,7 +368,7 @@ void myScene::showPEnemydie(){
      case 2: pix.load(":/myimg/skeleto/Skeleton_die1.png");skeletonFlag++;break;
      case 3: pix.load(":/myimg/skeleto/Skeleton_die2.png");skeletonFlag++;break;
      case 4: pix.load(":/myimg/skeleto/Skeleton_die3.png");skeletonFlag++;break;
-     case 5: pix.load(":/myimg/skeleto/Skeleton_die4.png"); skeletonFlag=0;timerSkeleton->stop();break;
+     case 5: pix.load(":/myimg/skeleto/Skeleton_die4.png"); skeletonFlag=0;timerSkeleton->stop();showEffectOfPoisoning();break;
      default :pix.load(":/myimg/skeleto/Skeleton_fly.png");skeletonFlag++; timerSkeleton->start(TIMER_TIMEOUT);break;
      }
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
@@ -380,6 +393,33 @@ void myScene::showUseHealthBag(){
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
 
      protpixmapItem->setPixmap(pix);
+
+}
+void myScene::showEffectOfPoisoning()
+{
+    int x = enemies[index_enemy]->getXPos();
+    int y = enemies[index_enemy]->getYPos();
+   // PEnemy p = move(enemies[index_enemy]);
+    QGraphicsRectItem *rectItem[8];
+    for (int i=0;i<8;i++)
+    {
+        rectItem[i] = new QGraphicsRectItem();
+        rectItem[i]->setPen(QPen(Qt::NoPen));
+        rectItem[i]->setBrush(QBrush(QColor(255, 0, 0)));
+        rectItem[i]->setOpacity(0.5);
+    }
+     rectItem[0]->setRect((x+1)*scalNum,y*scalNum, scalNum, scalNum);
+     rectItem[1]->setRect((x-1)*scalNum,y*scalNum, scalNum, scalNum);
+     rectItem[2]->setRect(x*scalNum,(y+1)*scalNum, scalNum, scalNum);
+     rectItem[3]->setRect(x*scalNum,(y-1)*scalNum, scalNum, scalNum);
+     rectItem[4]->setRect((x+1)*scalNum,(y+1)*scalNum, scalNum, scalNum);
+     rectItem[5]->setRect((x+1)*scalNum,(y-1)*scalNum, scalNum, scalNum);
+     rectItem[6]->setRect((x-1)*scalNum,(y+1)*scalNum, scalNum, scalNum);
+     rectItem[7]->setRect((x-1)*scalNum,(y-1)*scalNum, scalNum, scalNum);
+      for (int i=0;i<8;i++)
+      {
+       this->addItem(rectItem[i]);
+      }
 
 }
 /*

@@ -22,7 +22,7 @@ int getProtY();
 int getscalNum();
 void showEnemyAttack();
 void showPEnemyAttack();
-
+void showEffectOfPoisoning();
 
 
 
@@ -72,9 +72,9 @@ std::vector<int> PEnemiesX;
 std::vector<int> PEnemiesY;
 std::unique_ptr<Protagonist> prot;
 std::array<std::unique_ptr<Protagonist>,4> protList;
-std::vector<std::unique_ptr<Enemy>> enemies_temp;
+//std::vector<std::unique_ptr<Enemy>> PEnemies;
 std::vector<std::unique_ptr<Enemy>> enemies;
-std::vector<PEnemy> PEnemies;
+std::vector<PEnemy> *PEnemies;
 std::vector<std::unique_ptr<Tile>> healthpacks;
 std::vector<int> PEnemyIndex;
 //std::vector<std::shared_ptr<poisonedTile>> poisonedTiles;
