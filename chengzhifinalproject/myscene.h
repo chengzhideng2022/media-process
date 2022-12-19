@@ -20,6 +20,7 @@ int checkIsHealthBag(int x, int y);
 int getProtX();
 int getProtY();
 int getscalNum();
+void checkProtNeedDie();
 
 
 
@@ -63,7 +64,7 @@ private:
  int Num_enemies;
  int Num_healthpacks;
  int Num_P_enemies;
- int flag;
+ int flag,checkProtNeedDieFlag;
  int attackFlag,showProtDieFlag,showEnemyAttackFlag,showPEnemyAttackFlag;
  int soulFlag,skeletonFlag,showUseHealthBagFlag;
  float ratio;

@@ -30,7 +30,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  prot= world->getProtagonist();
  height = world->getRows() ;
  width = world->getCols();
- flag=1;
+ flag=1; checkProtNeedDieFlag=5;
  attackFlag=1;
  soulFlag=1;
  skeletonFlag=1;
@@ -49,7 +49,7 @@ timerUseHealth = new QTimer(this);
 timerShowPoisodisapperEffect =new QTimer(this);
 timerShowProtDie = new QTimer(this);
 timerEnemyAttack = new QTimer(this);timerPEnemyAttack = new QTimer(this);
-drawWorld(scalNum);   //showEnemyAttackSignal();showPEnemyAttackSignal();
+drawWorld(scalNum);
 
 setItemIndexMethod(QGraphicsScene::NoIndex);
 
@@ -94,29 +94,15 @@ else if(event->key() == Qt::Key_L)
 
   }
 
-else if(event->key() == Qt::Key_E)
-{
-
-    showEnemyAttackSignal();
-
-
-  }
-else if(event->key() == Qt::Key_P)
-{
-
-     showPEnemyAttackSignal();
-
-
-  }
     else if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
       userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();
-      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 
     else if (event->key() == Qt::Key_Left && !checkwall(prot->getXPos()-1,prot->getYPos())){
       userMoveView(); protpixmapItem ->moveBy(scalNum,0); prot->setXPos(prot->getXPos()+1);
-      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 
@@ -124,12 +110,12 @@ else if(event->key() == Qt::Key_P)
 
     else if (event->key() == Qt::Key_Right && checkwall(prot->getXPos()+1,prot->getYPos())) {// 向右移动
       userMoveView();protpixmapItem ->moveBy(scalNum, 0); prot->setXPos(prot->getXPos()+1);emit moveViewSignal();
-      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
     else if (event->key() == Qt::Key_Right  && !checkwall(prot->getXPos()+1,prot->getYPos())){
       userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);
-      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 
@@ -138,24 +124,24 @@ else if(event->key() == Qt::Key_P)
 
     else if (event->key() == Qt::Key_Up && checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
        userMoveView(); protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);emit moveViewSignal();
-       index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+       index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
        if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
     else if (event->key() == Qt::Key_Up && !checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
       userMoveView();  protpixmapItem->moveBy(0, +scalNum);prot->setYPos(prot->getYPos()+1);
-      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 
 
     else if (event->key() == Qt::Key_Down && checkwall(prot->getXPos(),prot->getYPos()+1)){ // 向下移动
       userMoveView();  protpixmapItem->moveBy(0, scalNum);prot->setYPos(prot->getYPos()+1);emit moveViewSignal();
-      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
    }
     else if (event->key() == Qt::Key_Down && !checkwall(prot->getXPos(),prot->getYPos()+1)){ // 向下移动
       userMoveView();  protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);
-      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) { checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 }
@@ -406,7 +392,13 @@ int myScene::checkIsHealthBag(int x, int y)
      return -1;
 
 }
-
+void myScene::checkProtNeedDie()
+{
+    if (checkProtNeedDieFlag<=0)
+    {
+        protDieSignal();
+    }
+}
 void myScene::showEnemydie(){
      QPixmap pix;
 
