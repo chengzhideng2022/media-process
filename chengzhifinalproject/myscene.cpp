@@ -486,7 +486,7 @@ void myScene::showProtDie(){
      case 2: pix.load(":/myimg/Die/GavielG_Die2.png");showProtDieFlag++;break;
      case 3: pix.load(":/myimg/Die/GavielG_Die3.png");showProtDieFlag++;break;
      case 4: pix.load(":/myimg/Die/GavielG_Die4.png");showProtDieFlag++;break;
-     case 5: pix.load(":/myimg/Die/GavielG_Die5.png");showProtDieFlag=0;timerShowProtDie->stop();break;
+     case 5: pix.load(":/myimg/gameover.png");showProtDieFlag=0;timerShowProtDie->stop();break;
      default :pix.load(":/myimg/Die/GavielG_Die1.png");showProtDieFlag++; timerShowProtDie->start(TIMER_TIMEOUT);break;
      }
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);

@@ -135,5 +135,6 @@
         <file>myimg/Accumulate/GavielG_Accu1.png</file>
         <file>myimg/Accumulate/Angel Feature2.png</file>
         <file>myimg/Accumulate/Angel Feature1.png</file>
+        <file>myimg/gameover.png</file>
     </qresource>
 </RCC>
