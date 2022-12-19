@@ -36,6 +36,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  skeletonFlag=1;
  showUseHealthBagFlag=1;
  showProtDieFlag=1;
+ showEnemyAttackFlag=1;showPEnemyAttackFlag=1;
  a=0;
 // this->setFocusItem(protpixmapItem);
 //QPoint cursorPoint;
@@ -47,6 +48,7 @@ timerSkeleton = new QTimer(this);
 timerUseHealth = new QTimer(this);
 timerShowPoisodisapperEffect =new QTimer(this);
 timerShowProtDie = new QTimer(this);
+timerEnemyAttack = new QTimer(this);timerPEnemyAttack = new QTimer(this);
 drawWorld(scalNum);
 setItemIndexMethod(QGraphicsScene::NoIndex);
 
@@ -81,17 +83,30 @@ else if(event->key() == Qt::Key_K)
       useHealthSignal();
    }
 
-   qDebug()<<"kkkkkkkkkk";
+
   }
 else if(event->key() == Qt::Key_L)
 {
 
     protDieSignal();
 
-   qDebug()<<"diediedie";
+
   }
 
+else if(event->key() == Qt::Key_E)
+{
 
+    showEnemyAttackSignal();
+
+
+  }
+else if(event->key() == Qt::Key_P)
+{
+
+     showPEnemyAttackSignal();
+
+
+  }
     else if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
       userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();}
     else if (event->key() == Qt::Key_Left && !checkwall(prot->getXPos()-1,prot->getYPos())){
@@ -312,6 +327,17 @@ void myScene::showEffectOfPoisoningSignal()
     connect(timerShowPoisodisapperEffect, SIGNAL(timeout()), this, SLOT(showPoisoningDisappear()));
     timerShowPoisodisapperEffect->start(TIMER_TIMEOUT);
 }
+void myScene::showEnemyAttackSignal()
+{
+    connect(timerEnemyAttack, SIGNAL(timeout()), this, SLOT(showEnemyAttack()));
+    timerEnemyAttack->start(TIMER_TIMEOUT);
+}
+
+void myScene::showPEnemyAttackSignal()
+{
+    connect(timerPEnemyAttack, SIGNAL(timeout()), this, SLOT(showPEnemyAttack()));
+    timerPEnemyAttack->start(TIMER_TIMEOUT);
+}
 
 int myScene::checkIsEnemy(int x, int y)
 {
@@ -486,8 +512,41 @@ void myScene::showProtDie(){
      case 2: pix.load(":/myimg/Die/GavielG_Die2.png");showProtDieFlag++;break;
      case 3: pix.load(":/myimg/Die/GavielG_Die3.png");showProtDieFlag++;break;
      case 4: pix.load(":/myimg/Die/GavielG_Die4.png");showProtDieFlag++;break;
-     case 5: pix.load(":/myimg/gameover.png");showProtDieFlag=0;timerShowProtDie->stop();break;
+     case 5: pix.load(":/myimg/Die/GavielG_Die5.png");showProtDieFlag++;break;
+     case 6: pix.load(":/myimg/gameover.png");showProtDieFlag=0;timerShowProtDie->stop();break;
      default :pix.load(":/myimg/Die/GavielG_Die1.png");showProtDieFlag++; timerShowProtDie->start(TIMER_TIMEOUT);break;
+     }
+     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+
+     protpixmapItem->setPixmap(pix);
+
+}
+void myScene::showEnemyAttack(){
+     QPixmap pix;
+
+     switch (showEnemyAttackFlag)
+     {
+     case 1: pix.load(":/myimg/soul/Soul_attack1.png");showEnemyAttackFlag++;break;
+     case 2: pix.load(":/myimg/soul/Soul_attack2.png");showEnemyAttackFlag++;break;
+     case 3: pix.load(":/myimg/soul/Soul_attack3.png");showEnemyAttackFlag++;break;
+     case 4: pix.load(":/myimg/soul/Soul_attack4.png");showEnemyAttackFlag=0;timerEnemyAttack->stop();break;
+     default :pix.load(":/myimg/soul/Soul_attack1.png");showEnemyAttackFlag++; timerEnemyAttack->start(TIMER_TIMEOUT);break;
+     }
+     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+
+     protpixmapItem->setPixmap(pix);
+
+}
+void myScene::showPEnemyAttack(){
+     QPixmap pix;
+
+     switch (showPEnemyAttackFlag)
+     {
+     case 1: pix.load(":/myimg/skeleto/Skeleton_Attack1.png");showPEnemyAttackFlag++;break;
+     case 2: pix.load(":/myimg/skeleto/Skeleton_Attack2.png");showPEnemyAttackFlag++;break;
+     case 3: pix.load(":/myimg/skeleto/Skeleton_Attack3.png");showPEnemyAttackFlag++;break;
+     case 4: pix.load(":/myimg/skeleto/Skeleton_Attack4.png");showPEnemyAttackFlag=0;timerPEnemyAttack->stop();break;
+     default :pix.load(":/myimg/skeleto/Skeleton_Attack1.png");showPEnemyAttackFlag++; timerPEnemyAttack->start(TIMER_TIMEOUT);break;
      }
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
 

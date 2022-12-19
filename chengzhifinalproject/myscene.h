@@ -20,20 +20,20 @@ int checkIsHealthBag(int x, int y);
 int getProtX();
 int getProtY();
 int getscalNum();
-void showEnemyAttack();
-void showPEnemyAttack();
 
 
 
 
-public slots:
 
-void attack();
+
+
+
 
 signals:
 void moveViewSignal();
 
 public slots:
+void attack();
 void attackTimeSignal();
 void enemyDieSignal();
 void PEnemyDieSignal();
@@ -41,12 +41,18 @@ void useHealthSignal();
 void protDieSignal();
 void showEffectOfPoisoningSignal();
 
+void showEnemyAttackSignal();
+void showPEnemyAttackSignal();
+
 void showEnemydie();
 void showPEnemydie();
 void showProtDie();
 void showUseHealthBag();
 void showEffectOfPoisoning();
 void showPoisoningDisappear();
+
+void showEnemyAttack();
+void showPEnemyAttack();
 //void moveView();
 
 private:
@@ -58,7 +64,7 @@ private:
  int Num_healthpacks;
  int Num_P_enemies;
  int flag;
- int attackFlag,showProtDieFlag;
+ int attackFlag,showProtDieFlag,showEnemyAttackFlag,showPEnemyAttackFlag;
  int soulFlag,skeletonFlag,showUseHealthBagFlag;
  float ratio;
  int a;
@@ -67,6 +73,7 @@ private:
  //std::unordered_map<int, Enemy> enemiesList;
  QTimer *timer,*timerShowPoisodisapperEffect,*timerShowProtDie;
  QTimer *timersoul,*timerSkeleton,*timerUseHealth;
+ QTimer *timerEnemyAttack,*timerPEnemyAttack;
  std::unique_ptr<World> world;
  std::vector<std::unique_ptr<Tile>> tiles;
 QImage bg;
