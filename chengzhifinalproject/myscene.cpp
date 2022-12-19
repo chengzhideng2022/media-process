@@ -49,7 +49,8 @@ timerUseHealth = new QTimer(this);
 timerShowPoisodisapperEffect =new QTimer(this);
 timerShowProtDie = new QTimer(this);
 timerEnemyAttack = new QTimer(this);timerPEnemyAttack = new QTimer(this);
-drawWorld(scalNum);
+drawWorld(scalNum);   //showEnemyAttackSignal();showPEnemyAttackSignal();
+
 setItemIndexMethod(QGraphicsScene::NoIndex);
 
 }
@@ -108,34 +109,54 @@ else if(event->key() == Qt::Key_P)
 
   }
     else if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
-      userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();}
+      userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+    }
+
     else if (event->key() == Qt::Key_Left && !checkwall(prot->getXPos()-1,prot->getYPos())){
       userMoveView(); protpixmapItem ->moveBy(scalNum,0); prot->setXPos(prot->getXPos()+1);
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 
 
 
     else if (event->key() == Qt::Key_Right && checkwall(prot->getXPos()+1,prot->getYPos())) {// 向右移动
       userMoveView();protpixmapItem ->moveBy(scalNum, 0); prot->setXPos(prot->getXPos()+1);emit moveViewSignal();
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
     else if (event->key() == Qt::Key_Right  && !checkwall(prot->getXPos()+1,prot->getYPos())){
       userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 
 
 
 
     else if (event->key() == Qt::Key_Up && checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
-       userMoveView(); protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);emit moveViewSignal();}
+       userMoveView(); protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);emit moveViewSignal();
+       index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+    }
     else if (event->key() == Qt::Key_Up && !checkwall(prot->getXPos(),prot->getYPos()-1)) {// 向上移动
       userMoveView();  protpixmapItem->moveBy(0, +scalNum);prot->setYPos(prot->getYPos()+1);
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 
 
     else if (event->key() == Qt::Key_Down && checkwall(prot->getXPos(),prot->getYPos()+1)){ // 向下移动
-      userMoveView();  protpixmapItem->moveBy(0, scalNum);prot->setYPos(prot->getYPos()+1);emit moveViewSignal();}
+      userMoveView();  protpixmapItem->moveBy(0, scalNum);prot->setYPos(prot->getYPos()+1);emit moveViewSignal();
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+   }
     else if (event->key() == Qt::Key_Down && !checkwall(prot->getXPos(),prot->getYPos()+1)){ // 向下移动
       userMoveView();  protpixmapItem->moveBy(0, -scalNum);prot->setYPos(prot->getYPos()-1);
+      index_enemy=checkIsEnemy( prot->getXPos(),prot->getYPos());  if (index_enemy != -1) {
+      if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }
 }
 
@@ -176,6 +197,7 @@ void myScene::drawWorld(int scalNum)
         QPixmap pix;
         qDebug()<<QString::fromStdString(enemy->serialize());
         qDebug()<<(QString::fromStdString(enemy->serialize())).split(',').length()-1;
+        qDebug()<<i<<"yyyyyyyyy";
        // qDebug()<<stringArray[0]<<"yyyyyyyyy"<<stringArray[1]<<"yyyyyyyyy"<<stringArray[2]<<"yyyyyyyyy"<<stringArray[3]<<"yyyyyyyyy";
         int numberOfparameter =(QString::fromStdString(enemy->serialize())).split(',').length()-1;
 
@@ -195,20 +217,17 @@ void myScene::drawWorld(int scalNum)
            pix.load(":/myimg/Skeleton21.png");
            PEnemyIndex.push_back(i);
            XPEnemy.push_back(x);
-           /*
-           PEnemy *PEnemy_temp = new PEnemy(x,y,s);
-           PEnemy_temp->setDefeated(d);
-           PEnemy_temp->setPoisonLevel(p);
-           PEnemies->push_back(*PEnemy_temp);
-           */
+
         }
 
             pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
             enemypixmapItem[i] = new QGraphicsPixmapItem();
             enemypixmapItem[i]->setPixmap(pix);
             enemypixmapItem[i]->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
-            enemypixmapItem[i]->setZValue(1);
+            enemypixmapItem[i]->setZValue(1);      
             this->addItem(enemypixmapItem[i]);
+
+
     }
       int j=0;
     for ( auto &healthpack : healthpacks)
@@ -529,12 +548,21 @@ void myScene::showEnemyAttack(){
      case 1: pix.load(":/myimg/soul/Soul_attack1.png");showEnemyAttackFlag++;break;
      case 2: pix.load(":/myimg/soul/Soul_attack2.png");showEnemyAttackFlag++;break;
      case 3: pix.load(":/myimg/soul/Soul_attack3.png");showEnemyAttackFlag++;break;
-     case 4: pix.load(":/myimg/soul/Soul_attack4.png");showEnemyAttackFlag=0;timerEnemyAttack->stop();break;
+     case 4: pix.load(":/myimg/soul/Soul_attack4.png");showEnemyAttackFlag++;break;
+     case 5: pix.load(":/myimg/soul/Soul_attack1.png");showEnemyAttackFlag++;break;
+     case 6: pix.load(":/myimg/soul/Soul_attack2.png");showEnemyAttackFlag++;break;
+     case 7: pix.load(":/myimg/soul/Soul_attack3.png");showEnemyAttackFlag++;break;
+     case 8: pix.load(":/myimg/soul/Soul_attack4.png");showEnemyAttackFlag++;break;
+     case 9: pix.load(":/myimg/soul/Soul_attack1.png");showEnemyAttackFlag++;break;
+     case 10: pix.load(":/myimg/soul/Soul_attack2.png");showEnemyAttackFlag++;break;
+     case 11: pix.load(":/myimg/soul/Soul_attack3.png");showEnemyAttackFlag++;break;
+     case 12: pix.load(":/myimg/soul/Soul_attack4.png");showEnemyAttackFlag++;break;
+     case 13: pix.load(":/myimg/Soul11.png");showEnemyAttackFlag=0;timerEnemyAttack->stop();break;
      default :pix.load(":/myimg/soul/Soul_attack1.png");showEnemyAttackFlag++; timerEnemyAttack->start(TIMER_TIMEOUT);break;
      }
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
 
-     protpixmapItem->setPixmap(pix);
+     enemypixmapItem[index_enemy]->setPixmap(pix);
 
 }
 void myScene::showPEnemyAttack(){
@@ -545,12 +573,20 @@ void myScene::showPEnemyAttack(){
      case 1: pix.load(":/myimg/skeleto/Skeleton_Attack1.png");showPEnemyAttackFlag++;break;
      case 2: pix.load(":/myimg/skeleto/Skeleton_Attack2.png");showPEnemyAttackFlag++;break;
      case 3: pix.load(":/myimg/skeleto/Skeleton_Attack3.png");showPEnemyAttackFlag++;break;
-     case 4: pix.load(":/myimg/skeleto/Skeleton_Attack4.png");showPEnemyAttackFlag=0;timerPEnemyAttack->stop();break;
+     case 4: pix.load(":/myimg/skeleto/Skeleton_Attack4.png");showPEnemyAttackFlag++;break;
+     case 5: pix.load(":/myimg/skeleto/Skeleton_Attack1.png");showPEnemyAttackFlag++;break;
+     case 6: pix.load(":/myimg/skeleto/Skeleton_Attack2.png");showPEnemyAttackFlag++;break;
+     case 7: pix.load(":/myimg/skeleto/Skeleton_Attack3.png");showPEnemyAttackFlag++;break;
+     case 8: pix.load(":/myimg/skeleto/Skeleton_Attack4.png");showPEnemyAttackFlag++;break;
+     case 9: pix.load(":/myimg/skeleto/Skeleton_Attack1.png");showPEnemyAttackFlag++;break;
+     case 10: pix.load(":/myimg/skeleto/Skeleton_Attack2.png");showPEnemyAttackFlag++;break;
+     case 11: pix.load(":/myimg/skeleto/Skeleton_Attack3.png");showPEnemyAttackFlag++;break;
+     case 12: pix.load(":/myimg/skeleto/Skeleton_Attack4.png");showPEnemyAttackFlag++;break;
+     case 13: pix.load(":/myimg/Skeleton21.png");showPEnemyAttackFlag=0;timerPEnemyAttack->stop();break;
      default :pix.load(":/myimg/skeleto/Skeleton_Attack1.png");showPEnemyAttackFlag++; timerPEnemyAttack->start(TIMER_TIMEOUT);break;
      }
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
-
-     protpixmapItem->setPixmap(pix);
+     enemypixmapItem[index_enemy]->setPixmap(pix);
 
 }
 /*
