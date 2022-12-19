@@ -4,6 +4,7 @@
 #include "myitem.h"
 #include <QObject>
 #include <QGraphicsScene>
+#include <QMouseEvent>
 using namespace std;
 class myScene : public QGraphicsScene
 {
@@ -21,7 +22,8 @@ int getProtX();
 int getProtY();
 int getscalNum();
 void checkProtNeedDie();
-
+void checkIsPoisoItem();
+void getmousePressEvent(QMouseEvent *event);
 
 
 
@@ -64,13 +66,13 @@ private:
  int Num_enemies;
  int Num_healthpacks;
  int Num_P_enemies;
- int flag,checkProtNeedDieFlag;
+ int flag,checkProtNeedDieFlag,checkIsPoisoItemFlag;
  int attackFlag,showProtDieFlag,showEnemyAttackFlag,showPEnemyAttackFlag;
  int soulFlag,skeletonFlag,showUseHealthBagFlag;
  float ratio;
- int a;
  int index_enemy,index_healthBag;
  int indexInPenemyList=-1;
+  QPointF cursorPoint;
  //std::unordered_map<int, Enemy> enemiesList;
  QTimer *timer,*timerShowPoisodisapperEffect,*timerShowProtDie;
  QTimer *timersoul,*timerSkeleton,*timerUseHealth;

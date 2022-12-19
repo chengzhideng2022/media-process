@@ -42,10 +42,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::getmousePressEvent(QMouseEvent *event)
- {
-     cursorPoint=event->pos();
- }
+
 
 
 void MainWindow::wheelEvent(QWheelEvent *event)
