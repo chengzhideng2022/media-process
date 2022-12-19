@@ -44,8 +44,10 @@ timer = new QTimer(this);
 timersoul = new QTimer(this);
 timerSkeleton = new QTimer(this);
 timerUseHealth = new QTimer(this);
+timerShowPoisodisapperEffect=new QTimer(this);
 drawWorld(scalNum);
 setItemIndexMethod(QGraphicsScene::NoIndex);
+
 }
 
 void myScene::keyPressEvent(QKeyEvent *event)
@@ -58,7 +60,7 @@ if(event->key() == Qt::Key_J)
    if(index_enemy != -1)
    {
        if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {
-       PEnemyDieSignal();//showEffectOfPoisoning();qDebug()<<"gggggggggggg";
+       PEnemyDieSignal();
        }
        else
        { enemyDieSignal();}
@@ -163,14 +165,15 @@ void myScene::drawWorld(int scalNum)
         {
            QVector<QString> stringArray(5);
            stringArray=(QString::fromStdString(enemy->serialize())).split(',');
-           int x=stringArray[0].toInt(0);
-           int y=stringArray[1].toInt(0);
-           int s=stringArray[2].toInt(0);
-           int d=stringArray[3].toInt(0);
-           int p=stringArray[4].toInt(0);
+           int x=stringArray[0].toInt(0);XPEnemy.push_back(x);
+           int y=stringArray[1].toInt(0);YPEnemy.push_back(y);
+           int s=stringArray[2].toInt(0);SPEnemy.push_back(s);
+           int d=stringArray[3].toInt(0);DPEnemy.push_back(d);
+           int p=stringArray[4].toInt(0);PPEnemy.push_back(p);
            pix.load(":/myimg/Skeleton21.png");
            PEnemyIndex.push_back(i);
-          /*
+           XPEnemy.push_back(x);
+           /*
            PEnemy *PEnemy_temp = new PEnemy(x,y,s);
            PEnemy_temp->setDefeated(d);
            PEnemy_temp->setPoisonLevel(p);
@@ -292,6 +295,11 @@ void myScene::useHealthSignal()
     connect(timerUseHealth, SIGNAL(timeout()), this, SLOT(showUseHealthBag()));
     timerUseHealth->start(TIMER_TIMEOUT);
 }
+void myScene::showEffectOfPoisoningSignal()
+{
+    connect(timerShowPoisodisapperEffect, SIGNAL(timeout()), this, SLOT(showPoisoningDisappear()));
+    timerShowPoisodisapperEffect->start(TIMER_TIMEOUT);
+}
 int myScene::checkIsEnemy(int x, int y)
 {
     x=prot->getXPos();
@@ -399,28 +407,62 @@ void myScene::showEffectOfPoisoning()
 {
     int x = enemies[index_enemy]->getXPos();
     int y = enemies[index_enemy]->getYPos();
-   // PEnemy p = move(enemies[index_enemy]);
-    QGraphicsRectItem *rectItem[8];
+
+    auto it = find(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy);
+    if (it != PEnemyIndex.end()) {
+        indexInPenemyList = it - PEnemyIndex.begin();
+    }
+    int p=0;
+    if(indexInPenemyList != -1)
+    {
+
+       p = PPEnemy[indexInPenemyList];
+    }
+
+
+      double temp=(double)p/100;
     for (int i=0;i<8;i++)
     {
-        rectItem[i] = new QGraphicsRectItem();
-        rectItem[i]->setPen(QPen(Qt::NoPen));
-        rectItem[i]->setBrush(QBrush(QColor(255, 0, 0)));
-        rectItem[i]->setOpacity(0.5);
+       poisorectItem[i]=new QGraphicsRectItem;
+        poisorectItem[i]->setPen(QPen(Qt::NoPen));
+        poisorectItem[i]->setBrush(QBrush(QColor(255, 0, 255)));
+        poisorectItem[i]->setOpacity(temp);
     }
-     rectItem[0]->setRect((x+1)*scalNum,y*scalNum, scalNum, scalNum);
-     rectItem[1]->setRect((x-1)*scalNum,y*scalNum, scalNum, scalNum);
-     rectItem[2]->setRect(x*scalNum,(y+1)*scalNum, scalNum, scalNum);
-     rectItem[3]->setRect(x*scalNum,(y-1)*scalNum, scalNum, scalNum);
-     rectItem[4]->setRect((x+1)*scalNum,(y+1)*scalNum, scalNum, scalNum);
-     rectItem[5]->setRect((x+1)*scalNum,(y-1)*scalNum, scalNum, scalNum);
-     rectItem[6]->setRect((x-1)*scalNum,(y+1)*scalNum, scalNum, scalNum);
-     rectItem[7]->setRect((x-1)*scalNum,(y-1)*scalNum, scalNum, scalNum);
+
+    qDebug()<<PPEnemy[indexInPenemyList]<<"fffffffffffff";
+    qDebug()<<indexInPenemyList<<"xxxxxxxxxxx";
+    qDebug()<<PPEnemy;
+    qDebug()<<p<<"pppppppppppp";
+    qDebug()<<temp<<"temptemptemptemptemp";
+
+     poisorectItem[0]->setRect((x+1)*scalNum,y*scalNum, scalNum, scalNum);
+     poisorectItem[1]->setRect((x-1)*scalNum,y*scalNum, scalNum, scalNum);
+     poisorectItem[2]->setRect(x*scalNum,(y+1)*scalNum, scalNum, scalNum);
+     poisorectItem[3]->setRect(x*scalNum,(y-1)*scalNum, scalNum, scalNum);
+     poisorectItem[4]->setRect((x+1)*scalNum,(y+1)*scalNum, scalNum, scalNum);
+     poisorectItem[5]->setRect((x+1)*scalNum,(y-1)*scalNum, scalNum, scalNum);
+     poisorectItem[6]->setRect((x-1)*scalNum,(y+1)*scalNum, scalNum, scalNum);
+     poisorectItem[7]->setRect((x-1)*scalNum,(y-1)*scalNum, scalNum, scalNum);
       for (int i=0;i<8;i++)
       {
-       this->addItem(rectItem[i]);
+       this->addItem(poisorectItem[i]);
       }
+     showEffectOfPoisoningSignal();
+}
 
+
+void myScene::showPoisoningDisappear()
+{
+    PPEnemy[indexInPenemyList]=PPEnemy[indexInPenemyList]-10;
+    if(PPEnemy[indexInPenemyList]<0)
+    {
+      PPEnemy[indexInPenemyList]=0;timerShowPoisodisapperEffect->stop();
+    }
+     double temp=(double)PPEnemy[indexInPenemyList]/100;
+    for (int i=0;i<8;i++)
+    {
+      poisorectItem[i]->setOpacity(temp);
+    }
 }
 /*
  * void myScene::drawWorld()

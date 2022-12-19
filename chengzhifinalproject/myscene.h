@@ -22,7 +22,7 @@ int getProtY();
 int getscalNum();
 void showEnemyAttack();
 void showPEnemyAttack();
-void showEffectOfPoisoning();
+
 
 
 
@@ -38,10 +38,13 @@ void attackTimeSignal();
 void enemyDieSignal();
 void PEnemyDieSignal();
 void useHealthSignal();
+void showEffectOfPoisoningSignal();
 
 void showEnemydie();
 void showPEnemydie();
 void showUseHealthBag();
+void showEffectOfPoisoning();
+void showPoisoningDisappear();
 //void moveView();
 
 private:
@@ -58,8 +61,9 @@ private:
  float ratio;
  int a;
  int index_enemy,index_healthBag;
+ int indexInPenemyList=-1;
  //std::unordered_map<int, Enemy> enemiesList;
- QTimer *timer;
+ QTimer *timer,*timerShowPoisodisapperEffect;
  QTimer *timersoul,*timerSkeleton,*timerUseHealth;
  std::unique_ptr<World> world;
  std::vector<std::unique_ptr<Tile>> tiles;
@@ -67,6 +71,7 @@ QImage bg;
 QGraphicsPixmapItem *protpixmapItem;
 QGraphicsPixmapItem *enemypixmapItem[20];
 QGraphicsPixmapItem *healthpixmapItem[20];
+QGraphicsRectItem *poisorectItem[8];
 QPixmap pm;
 std::vector<int> PEnemiesX;
 std::vector<int> PEnemiesY;
@@ -77,6 +82,7 @@ std::vector<std::unique_ptr<Enemy>> enemies;
 std::vector<PEnemy> *PEnemies;
 std::vector<std::unique_ptr<Tile>> healthpacks;
 std::vector<int> PEnemyIndex;
+std::vector<int> XPEnemy,YPEnemy,PPEnemy,DPEnemy,SPEnemy;
 //std::vector<std::shared_ptr<poisonedTile>> poisonedTiles;
 bool gameStop = false;
 char activeProtsAmount = 1;
