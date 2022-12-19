@@ -35,6 +35,7 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  soulFlag=1;
  skeletonFlag=1;
  showUseHealthBagFlag=1;
+ showProtDieFlag=1;
  a=0;
 // this->setFocusItem(protpixmapItem);
 //QPoint cursorPoint;
@@ -44,7 +45,8 @@ timer = new QTimer(this);
 timersoul = new QTimer(this);
 timerSkeleton = new QTimer(this);
 timerUseHealth = new QTimer(this);
-timerShowPoisodisapperEffect=new QTimer(this);
+timerShowPoisodisapperEffect =new QTimer(this);
+timerShowProtDie = new QTimer(this);
 drawWorld(scalNum);
 setItemIndexMethod(QGraphicsScene::NoIndex);
 
@@ -65,10 +67,9 @@ if(event->key() == Qt::Key_J)
        else
        { enemyDieSignal();}
    }
-
    qDebug()<<"jjjjjjjjjjjjjj";
   }
-if(event->key() == Qt::Key_K)
+else if(event->key() == Qt::Key_K)
 {
    index_healthBag=checkIsHealthBag(prot->getXPos(),prot->getYPos());
    if(index_healthBag != -1)
@@ -76,14 +77,20 @@ if(event->key() == Qt::Key_K)
        qDebug()<<index_healthBag<<"indexindexinedx";
        QPixmap pix;
        pix.load(":/myimg/soul/Soul_die5.png");
-      // pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
-      // this->removeItem(healthpixmapItem[index_healthBag]);
        healthpixmapItem[index_healthBag]->setPixmap(pix);
       useHealthSignal();
    }
 
    qDebug()<<"kkkkkkkkkk";
   }
+else if(event->key() == Qt::Key_L)
+{
+
+    protDieSignal();
+
+   qDebug()<<"diediedie";
+  }
+
 
     else if (event->key() == Qt::Key_Left && checkwall(prot->getXPos()-1,prot->getYPos())) { // 向左移动
       userMoveView(); protpixmapItem ->moveBy(-scalNum,0); prot->setXPos(prot->getXPos()-1);emit moveViewSignal();}
@@ -285,6 +292,11 @@ void myScene::enemyDieSignal()
    connect(timersoul, SIGNAL(timeout()), this, SLOT(showEnemydie()));
    timersoul->start(TIMER_TIMEOUT);
 }
+void myScene::protDieSignal()
+{
+    connect(timerShowProtDie, SIGNAL(timeout()), this, SLOT(showProtDie()));
+   timerShowProtDie ->start(TIMER_TIMEOUT);
+}
 void myScene::PEnemyDieSignal()
 {
    connect(timerSkeleton, SIGNAL(timeout()), this, SLOT(showPEnemydie()));
@@ -300,6 +312,7 @@ void myScene::showEffectOfPoisoningSignal()
     connect(timerShowPoisodisapperEffect, SIGNAL(timeout()), this, SLOT(showPoisoningDisappear()));
     timerShowPoisodisapperEffect->start(TIMER_TIMEOUT);
 }
+
 int myScene::checkIsEnemy(int x, int y)
 {
     x=prot->getXPos();
@@ -387,7 +400,7 @@ void myScene::showUseHealthBag(){
 
      switch (showUseHealthBagFlag)
      {
-     case 1: pix.load(":/myimg/Accumulate/Angel Feature1.pngg");showUseHealthBagFlag++;break;
+     case 1: pix.load(":/myimg/Accumulate/Angel Feature1.png");showUseHealthBagFlag++;break;
      case 2: pix.load(":/myimg/Accumulate/Angel Feature2.png");showUseHealthBagFlag++;break;
      case 3: pix.load(":/myimg/Accumulate/GavielG_Accu1.png");showUseHealthBagFlag++;break;
      case 4: pix.load(":/myimg/Accumulate/GavielG_Accu2.png");showUseHealthBagFlag++;break;
@@ -463,6 +476,23 @@ void myScene::showPoisoningDisappear()
     {
       poisorectItem[i]->setOpacity(temp);
     }
+}
+void myScene::showProtDie(){
+     QPixmap pix;
+
+     switch (showProtDieFlag)
+     {
+     case 1: pix.load(":/myimg/Die/GavielG_Die1.png");showProtDieFlag++;break;
+     case 2: pix.load(":/myimg/Die/GavielG_Die2.png");showProtDieFlag++;break;
+     case 3: pix.load(":/myimg/Die/GavielG_Die3.png");showProtDieFlag++;break;
+     case 4: pix.load(":/myimg/Die/GavielG_Die4.png");showProtDieFlag++;break;
+     case 5: pix.load(":/myimg/Die/GavielG_Die5.png");showProtDieFlag=0;timerShowProtDie->stop();break;
+     default :pix.load(":/myimg/Die/GavielG_Die1.png");showProtDieFlag++; timerShowProtDie->start(TIMER_TIMEOUT);break;
+     }
+     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+
+     protpixmapItem->setPixmap(pix);
+
 }
 /*
  * void myScene::drawWorld()
