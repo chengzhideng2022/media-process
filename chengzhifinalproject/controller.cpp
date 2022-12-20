@@ -9,11 +9,19 @@ controller::controller()
     timerSkeleton = new QTimer(this);
     timerUseHealth = new QTimer(this);
     timerShowPoisodisapperEffect =new QTimer(this);
-    timerShowProtDie = new QTimer(this);
+
     timerEnemyAttack = new QTimer(this);timerPEnemyAttack = new QTimer(this);
     */
+
+    // timerShowProtDie = new QTimer(this);
 }
 /*
+void controller::protDieSignal()
+{
+    connect(timerShowProtDie, SIGNAL(timeout()), myScene, SLOT(showProtDie()));
+   timerShowProtDie ->start(TIMER_TIMEOUT);
+}
+
 void controller::attackTimeSignal()
 {
    connect(timer, SIGNAL(timeout()), this, SLOT(attack()));
@@ -25,11 +33,7 @@ void controller::enemyDieSignal()
    connect(timersoul, SIGNAL(timeout()), this, SLOT(showEnemydie()));
    timersoul->start(TIMER_TIMEOUT);
 }
-void controller::protDieSignal()
-{
-    connect(timerShowProtDie, SIGNAL(timeout()), this, SLOT(showProtDie()));
-   timerShowProtDie ->start(TIMER_TIMEOUT);
-}
+
 void controller::PEnemyDieSignal()
 { // enemies[index_enemy]->setDefeated(1);
    connect(timerSkeleton, SIGNAL(timeout()), this, SLOT(showPEnemydie()));

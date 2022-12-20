@@ -217,3 +217,17 @@ int model::checkIsHealthBag(int x, int y)
      return -1;
 
 }
+
+bool model::checkProtNeedDie()
+{
+    if (checkProtNeedDieFlag<=0)
+    {
+        return true;qDebug()<<"diediediediedie";
+    }
+    else {return false;}
+}
+void model::protHurt()
+{
+    checkProtNeedDieFlag=checkProtNeedDieFlag-1;
+    qDebug()<<checkProtNeedDieFlag<<"checkProtNeedDieFlag";
+}

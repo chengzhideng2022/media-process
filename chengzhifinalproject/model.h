@@ -33,6 +33,8 @@ float ** GetColorDepth();
 float checkwall(int protx, int proty);
 int checkIsEnemy(int x, int y);
 int checkIsHealthBag(int x, int y);
+bool checkProtNeedDie();
+void protHurt();
 
 
 
@@ -68,6 +70,8 @@ private:
   QTimer *timer,*timerShowPoisodisapperEffect,*timerShowProtDie;
   QTimer *timersoul,*timerSkeleton,*timerUseHealth;
   QTimer *timerEnemyAttack,*timerPEnemyAttack;
+
+
 };
 
 #endif // MODEL_H

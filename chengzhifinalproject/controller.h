@@ -8,6 +8,8 @@ class controller :public QGraphicsScene
     Q_OBJECT
 public:
     controller();
+    public slots:
+   // void protDieSignal();
     /*
 public slots:
 void attack();
@@ -20,11 +22,12 @@ void showEffectOfPoisoningSignal();
 
 void showEnemyAttackSignal();
 void showPEnemyAttackSignal();
+*/
 private:
     QTimer *timer,*timerShowPoisodisapperEffect,*timerShowProtDie;
     QTimer *timersoul,*timerSkeleton,*timerUseHealth;
     QTimer *timerEnemyAttack,*timerPEnemyAttack;
-    */
+
 };
 
 #endif // CONTROLLER_H
