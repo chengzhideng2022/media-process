@@ -6,16 +6,11 @@
 #include <QTimer>
 #include<bits/stdc++.h>
 #include <map>
+#include "model.h"
 #define TIMER_TIMEOUT   (500)
 myScene::myScene(QObject *parent) : QGraphicsScene{parent}
 {
- //this->item= new myItem;
- //item->setPos(1,1);
- //item->setOffset(10000,100000);
- //myItem *item2 =new myItem;
- //this->addItem(this->item);
- //item2->setPos(2000,20000);
- //this->addItem(item2);
+    model *m= new model();
     index_enemy=0;index_healthBag=0;
     Num_enemies=10;
     Num_healthpacks=3;
@@ -24,11 +19,11 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  QString map = ":/img/worldmap.png";
  world = std::make_unique<World>();
  world->createWorld(map,Num_enemies,Num_healthpacks,ratio);
- enemies = world->getEnemies();
- tiles = world->getTiles();
- healthpacks = world->getHealthPacks();
+ enemies = m->getEnemies();
+ tiles = m->getTiles();
+ healthpacks = m->getHealthpack();
  prot= world->getProtagonist();
- height = world->getRows() ;
+ height = world->getRows();
  width = world->getCols();
  flag=1; checkProtNeedDieFlag=10;
  attackFlag=1;
@@ -176,7 +171,7 @@ void myScene::drawWorld(int scalNum)
 
     for ( auto &tile : tiles )
         {
-            std::unique_ptr<Tile> newTile = std::move(tile);
+            std::shared_ptr<Tile> newTile = std::move(tile);
             float val = newTile->getValue();
             int tx = newTile->getXPos();
             int ty = newTile->getYPos();
@@ -255,7 +250,6 @@ void myScene::drawWorld(int scalNum)
     protpixmapItem->setZValue(1);
     this->setFocusItem(protpixmapItem);
     this->addItem(protpixmapItem);
-
 
 }
 

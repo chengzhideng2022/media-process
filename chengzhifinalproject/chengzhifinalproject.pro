@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    model.cpp \
     myitem.cpp \
     myscene.cpp
 
 HEADERS += \
     mainwindow.h \
+    model.h \
     myitem.h \
     myscene.h \
     world.h \
