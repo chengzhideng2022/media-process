@@ -1,6 +1,7 @@
 #include "model.h"
-
-model::model()
+#include "qtimer.h"
+#include <QTimer>
+   model::model()
 {
     index_enemy=0;index_healthBag=0;
     Num_enemies=10;
@@ -33,9 +34,9 @@ model::model()
       healthpacks.push_back( newTile );
   }
 
-        auto proto = world->getProtagonist();
 
-/*
+
+
   prot= world->getProtagonist();
   height = world->getRows() ;
   width = world->getCols();
@@ -47,7 +48,16 @@ model::model()
   showProtDieFlag=1;
   showEnemyAttackFlag=1;showPEnemyAttackFlag=1;
   checkIsPoisoItemFlag=0;
-  */
+
+  scalNum=100;
+  timer = new QTimer(this);
+  timersoul = new QTimer(this);
+  timerSkeleton = new QTimer(this);
+  timerUseHealth = new QTimer(this);
+  timerShowPoisodisapperEffect =new QTimer(this);
+  timerShowProtDie = new QTimer(this);
+  timerEnemyAttack = new QTimer(this);timerPEnemyAttack = new QTimer(this);
+
 }
 std::vector<std::shared_ptr<Tile>> model::getHealthpack()
 {
@@ -63,5 +73,11 @@ std::vector<std::shared_ptr<Enemy>> model::getEnemies()
 {
     return enemies;
 }
-
-
+int model::getHeight()
+{
+   return height;
+}
+int model::getWidth()
+{
+   return width;
+}

@@ -2,14 +2,23 @@
 #define MODEL_H
 
 #include "world.h"
-class model
+#include "qevent.h"
+#include <QGraphicsView>
+#include <QDebug>
+#include <vector>
+#include <QTimer>
+#include <QObject>
+#include<bits/stdc++.h>
+class model : public QObject
 {
+     Q_OBJECT
 public:
     model();
 
 std::vector<std::shared_ptr<Tile>> getHealthpack();
 std::vector<std::shared_ptr<Tile>> getTiles();
 std::vector<std::shared_ptr<Enemy>> getEnemies();
+int getHeight(); int getWidth();
 private:
   std::shared_ptr<World> world;
 
@@ -37,6 +46,9 @@ private:
   std::vector<int> PEnemyIndex;
   std::vector<int> XPEnemy,YPEnemy,PPEnemy,DPEnemy,SPEnemy;
 
+  QTimer *timer,*timerShowPoisodisapperEffect,*timerShowProtDie;
+  QTimer *timersoul,*timerSkeleton,*timerUseHealth;
+  QTimer *timerEnemyAttack,*timerPEnemyAttack;
 };
 
 #endif // MODEL_H

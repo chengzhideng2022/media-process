@@ -23,8 +23,8 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  tiles = m->getTiles();
  healthpacks = m->getHealthpack();
  prot= world->getProtagonist();
- height = world->getRows();
- width = world->getCols();
+ height = m->getHeight();
+ width = m->getWidth();
  flag=1; checkProtNeedDieFlag=10;
  attackFlag=1;
  soulFlag=1;
@@ -33,8 +33,6 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
  showProtDieFlag=1;
  showEnemyAttackFlag=1;showPEnemyAttackFlag=1;
  checkIsPoisoItemFlag=0;
-// this->setFocusItem(protpixmapItem);
-//QPoint cursorPoint;
 
 scalNum=100;
 timer = new QTimer(this);
