@@ -192,3 +192,28 @@ int model::checkIsEnemy(int x, int y)
      }
      return -1;
 }
+
+int model::checkIsHealthBag(int x, int y)
+{
+    x=prot->getXPos();
+    y=prot->getYPos();
+    int i=0;
+     for ( auto &healthpack : healthpacks)
+     {
+         if((x==healthpack->getXPos()-1)&&(y==healthpack->getYPos())){
+            return i;
+         }
+      i++;
+     }
+     int j= 0;
+     for ( auto &healthpack : healthpacks )
+     {
+         if((x==healthpack->getXPos())&&(y==healthpack->getYPos())){
+            return j;
+         }
+   j++;
+     }
+
+     return -1;
+
+}

@@ -32,7 +32,7 @@ float ** GetColorDepth();
 
 float checkwall(int protx, int proty);
 int checkIsEnemy(int x, int y);
-
+int checkIsHealthBag(int x, int y);
 
 
 

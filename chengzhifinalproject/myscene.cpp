@@ -378,26 +378,7 @@ int myScene::checkIsEnemy(int x, int y)
 
 int myScene::checkIsHealthBag(int x, int y)
 {
-    x=m->getProtX();
-    y=m->getProtY();
-    int i=0;
-     for ( auto &healthpack : healthpacks)
-     {
-         if((x==healthpack->getXPos()-1)&&(y==healthpack->getYPos())){
-            return i;
-         }
-      i++;
-     }
-     int j= 0;
-     for ( auto &healthpack : healthpacks )
-     {
-         if((x==healthpack->getXPos())&&(y==healthpack->getYPos())){
-            return j;
-         }
-   j++;
-     }
-
-     return -1;
+    return m->checkIsHealthBag(x,y);
 
 }
 void myScene::checkProtNeedDie()
