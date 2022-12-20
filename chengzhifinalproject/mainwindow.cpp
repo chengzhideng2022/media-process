@@ -110,6 +110,7 @@ void MainWindow::moveView()
     int n = this->sc->getscalNum();
 
      int x = this->sc->getProtX();
+
      qDebug()<<x;
      int y = this->sc->getProtY();
      qDebug()<<y;

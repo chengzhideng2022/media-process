@@ -51,6 +51,7 @@ setItemIndexMethod(QGraphicsScene::NoIndex);
 
 }
 
+
 void myScene::keyPressEvent(QKeyEvent *event)
 {
 
@@ -90,6 +91,74 @@ else if(event->key() == Qt::Key_L)
 
   }
 
+else if (event->key() == Qt::Key_Left && checkwall(m->getProtX()-1,m->getProtY())) { // 向左移动
+  userMoveView(); protpixmapItem ->moveBy(-scalNum,0); m->setProtX(m->getProtX()-1);emit moveViewSignal();
+  index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+  if (! enemies[index_enemy]->getDefeated()) {
+      checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+  if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+
+else if (event->key() == Qt::Key_Left && !checkwall(m->getProtX()-1,m->getProtY())){
+  userMoveView(); protpixmapItem ->moveBy(scalNum,0); m->setProtX(m->getProtX()+1);
+  index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+  if (! enemies[index_enemy]->getDefeated()) {
+      checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+  if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+
+
+
+else if (event->key() == Qt::Key_Right && checkwall(m->getProtX()+1,m->getProtY())) {// 向右移动
+  userMoveView();protpixmapItem ->moveBy(scalNum, 0); m->setProtX(m->getProtX()+1);emit moveViewSignal();
+  index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+  if (! enemies[index_enemy]->getDefeated()) {
+      checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+  if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+else if (event->key() == Qt::Key_Right  && !checkwall(m->getProtX()+1,m->getProtY())){
+  userMoveView(); protpixmapItem ->moveBy(-scalNum,0); m->setProtX(m->getProtX()-1);
+  index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+  if (! enemies[index_enemy]->getDefeated()) {
+      checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+  if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+
+
+
+
+else if (event->key() == Qt::Key_Up && checkwall(m->getProtX(),m->getProtY()-1)) {// 向上移动
+   userMoveView(); protpixmapItem->moveBy(0, -scalNum);m->setProtY(m->getProtY()-1);emit moveViewSignal();
+   index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+       if (! enemies[index_enemy]->getDefeated()) {
+               checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+   if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+
+else if (event->key() == Qt::Key_Up && !checkwall(m->getProtX(),m->getProtY()-1)) {// 向上移动
+  userMoveView();  protpixmapItem->moveBy(0, +scalNum);m->setProtY(m->getProtY()+1);
+  index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+   if (! enemies[index_enemy]->getDefeated()) {
+      checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+  if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) {showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+
+
+else if (event->key() == Qt::Key_Down && checkwall(m->getProtX(),m->getProtY()+1)){ // 向下移动
+  userMoveView();  protpixmapItem->moveBy(0, scalNum);m->setProtY(m->getProtY()+1);emit moveViewSignal();
+  index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+   if (! enemies[index_enemy]->getDefeated()) {
+      checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+  if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+else if (event->key() == Qt::Key_Down && !checkwall(m->getProtX(),m->getProtY()+1)){ // 向下移动
+  userMoveView();  protpixmapItem->moveBy(0, -scalNum);m->setProtY(m->getProtY()-1);
+  index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
+  if (! enemies[index_enemy]->getDefeated()) {
+      checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
+  if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
+}}
+/*
     else if (event->key() == Qt::Key_Left && checkwall(m->getProtX()-1,m->getProtY())) { // 向左移动
       userMoveView(); protpixmapItem ->moveBy(-scalNum,0); m->setProtX(m->getProtX()-1);emit moveViewSignal();
       index_enemy=checkIsEnemy( m->getProtX(),m->getProtY()); checkIsPoisoItem(); if (index_enemy != -1) {
@@ -157,6 +226,7 @@ else if(event->key() == Qt::Key_L)
           checkProtNeedDieFlag=checkProtNeedDieFlag-1;checkProtNeedDie();
       if (std::count(PEnemyIndex.begin(), PEnemyIndex.end(), index_enemy)) { showPEnemyAttackSignal();}else{showEnemyAttackSignal(); }}
     }}
+    */
 }
 
 void myScene::drawWorld(int scalNum)
@@ -270,15 +340,9 @@ void myScene::drawWorld(int scalNum)
 
 }
 
-float myScene::checkwall(int protx, int proty)
+float myScene::checkwall(int x, int y)
 {
-     protx=m->getProtX();
-     proty=m->getProtY();
-float difficulty = array[proty][protx];
-
-return difficulty;
-
-
+    return m->checkwall(x,y);
 }
 
 int myScene::getProtX()
@@ -311,7 +375,7 @@ void myScene::userMoveView()
      protpixmapItem->setPixmap(pix);
    }
 
-void myScene::attack()
+void myScene::protAttackView()
 { QPixmap pix;
     switch (attackFlag)
     {
@@ -331,7 +395,7 @@ void myScene::attack()
 }
 void myScene::attackTimeSignal()
 {
-   connect(timer, SIGNAL(timeout()), this, SLOT(attack()));
+   connect(timer, SIGNAL(timeout()), this, SLOT(protAttackView()));
    timer->start(TIMER_TIMEOUT);
 
 }

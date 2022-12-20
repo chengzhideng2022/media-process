@@ -8,8 +8,9 @@
 #include <vector>
 #include <QTimer>
 #include <QObject>
+#include <QKeyEvent>
 #include<bits/stdc++.h>
-class model : public QObject
+class model : public QGraphicsScene
 {
      Q_OBJECT
 public:
@@ -27,8 +28,14 @@ std::vector<std::shared_ptr<Enemy>> getsoulEnemies();
 std::vector<int> getPPenemy();
 std::vector<int> getPEnemyIndex();
 int getindex_enemy();
-float checkwall(int protx, int proty);
 float ** GetColorDepth();
+
+float checkwall(int protx, int proty);
+
+
+
+
+
 private:
   std::shared_ptr<World> world;
   float **array;
@@ -44,6 +51,7 @@ private:
   float ratio;
   int index_enemy,index_healthBag;
   int indexInPenemyList=-1;
+
   std::vector<int> PEnemiesX;
   std::vector<int> PEnemiesY;
   std::shared_ptr<Protagonist> prot;

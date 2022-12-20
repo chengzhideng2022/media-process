@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <vector>
 #include <QString>
+#include <QKeyEvent>
    model::model()
 {
     index_enemy=0;index_healthBag=0;
@@ -13,7 +14,7 @@
     Num_healthpacks=3;
     ratio=0.5;
     Num_P_enemies= ratio*Num_enemies;
-
+   scalNum=100;
  QString map = ":/img/worldmap.png";
 
   world=  std::make_shared<World>();
@@ -23,27 +24,24 @@
   for ( auto &enemy : world->getEnemies() )
   {  qDebug()<<QString::fromStdString(enemy->serialize());
       int numberOfparameter =(QString::fromStdString(enemy->serialize())).split(',').length()-1;
-      // qDebug()<<"222222222222222222222222222222222";
+
       std::shared_ptr<Enemy> newEnemy = std::move(enemy);
       std::shared_ptr<Enemy> pnewEnemy = std::move(enemy);
       std::shared_ptr<Enemy> snewEnemy = std::move(enemy);
       enemies.push_back( newEnemy );
-      i++;//qDebug()<<"11111111111111111111111111";
+      i++;
           if(numberOfparameter==3)
-         { // qDebug()<<"******************************";
-              //qDebug()<<QString::fromStdString(snewEnemy->serialize());qDebug()<<"3333333333333333333333333";
-              soulEnemies.push_back(snewEnemy);// qDebug()<<"44444444444444444444444";
+         {
+              soulEnemies.push_back(snewEnemy);
          }
          else
 
-         { // qDebug()<<"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
-             // qDebug()<<QString::fromStdString(pnewEnemy ->serialize()); qDebug()<<"555555555555555555555555555";
-
-            //  QVector<QString> stringArray(5); //qDebug()<<"66666666666666666666";
-            //  stringArray=(QString::fromStdString(snewEnemy->serialize())).split(',');qDebug()<<"777777777777777777777777777";
-            //  int p=stringArray[4].toInt(0);PPEnemy.push_back(p); qDebug()<<"8888888888888888888888";
+         {
+           //  QVector<QString> stringArray(5);
+            //  stringArray=(QString::fromStdString(snewEnemy->serialize())).split(',');
+            //  int p=stringArray[4].toInt(0);PPEnemy.push_back(p);
               PEnemyIndex.push_back(i);
-                 PEnemies.push_back(pnewEnemy);
+              PEnemies.push_back(pnewEnemy);
           }
   }
 
@@ -61,9 +59,6 @@
       healthpacks.push_back( newTile );
   }
 
-
-
-
   prot= world->getProtagonist();
   height = world->getRows() ;
   width = world->getCols();
@@ -76,7 +71,6 @@
   showEnemyAttackFlag=1;showPEnemyAttackFlag=1;
   checkIsPoisoItemFlag=0;
 
-  scalNum=100;
   timer = new QTimer(this);
   timersoul = new QTimer(this);
   timerSkeleton = new QTimer(this);
@@ -85,28 +79,6 @@
   timerShowProtDie = new QTimer(this);
   timerEnemyAttack = new QTimer(this);timerPEnemyAttack = new QTimer(this);
 
-
- /*
-  for ( auto &enemy : enemies)
-  {
-     qDebug()<<"QString::fromStdString(enemy->serialize())";
-   i++;
-      int numberOfparameter =(QString::fromStdString(enemy->serialize())).split(',').length()-1;
-      std::shared_ptr<Enemy> newEnemy = std::move(enemy);
-       if(numberOfparameter==3)
-      {   qDebug()<<QString::fromStdString(enemy->serialize());
-           soulEnemies.push_back(newEnemy);
-      }
-      else
-      { qDebug()<<QString::fromStdString(enemy->serialize());
-           PEnemies.push_back(newEnemy);
-           QVector<QString> stringArray(5);
-           stringArray=(QString::fromStdString(enemy->serialize())).split(',');
-           int p=stringArray[4].toInt(0);PPEnemy.push_back(p);
-           PEnemyIndex.push_back(i);
-       }
-  }
-*/
  }
 std::vector<std::shared_ptr<Tile>> model::getHealthpack()
 {
@@ -166,11 +138,10 @@ std::vector<int> model::getPEnemyIndex()
 {
     return PEnemyIndex;
 }
-float model::checkwall(int protx, int proty)
-{
-     protx=prot->getXPos();
-     proty=prot->getYPos();
-float difficulty = array[proty][protx];
+float model::checkwall(int x, int y)
+{   // GetColorDepth();
+
+float difficulty = array[y][x];
 
 return difficulty;
 
@@ -198,3 +169,4 @@ float ** model::GetColorDepth()
         }
     return array;
 }
+

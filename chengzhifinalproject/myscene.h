@@ -16,15 +16,19 @@ void drawWorld(int scal);
 void userMoveView();
 
 void keyPressEvent(QKeyEvent *event);
+void getmousePressEvent(QMouseEvent *event);
+int getProtX();
+int getProtY();
+
+
 float checkwall(int x, int y);
 int checkIsEnemy(int x, int y);
 int checkIsHealthBag(int x, int y);
-int getProtX();
-int getProtY();
+
 int getscalNum();
 void checkProtNeedDie();
 void checkIsPoisoItem();
-void getmousePressEvent(QMouseEvent *event);
+
 
 
 
@@ -37,7 +41,7 @@ signals:
 void moveViewSignal();
 
 public slots:
-void attack();
+void protAttackView();
 void attackTimeSignal();
 void enemyDieSignal();
 void PEnemyDieSignal();
