@@ -20,9 +20,18 @@ std::vector<std::shared_ptr<Tile>> getTiles();
 std::vector<std::shared_ptr<Enemy>> getEnemies();
 int getHeight(); int getWidth(); int getScalNum();
 int getProtX(); int getProtY(); void setProtX(int x);void setProtY(int y);
+
+std::vector<std::shared_ptr<Enemy>> getPEnemies();
+std::vector<std::shared_ptr<Enemy>> getsoulEnemies();
+
+std::vector<int> getPPenemy();
+std::vector<int> getPEnemyIndex();
+int getindex_enemy();
+float checkwall(int protx, int proty);
+float ** GetColorDepth();
 private:
   std::shared_ptr<World> world;
-
+  float **array;
   int height;
   int width;
   int scalNum;
@@ -39,10 +48,11 @@ private:
   std::vector<int> PEnemiesY;
   std::shared_ptr<Protagonist> prot;
   std::array<std::shared_ptr<Protagonist>,4> protList;
-  //std::vector<std::unique_ptr<Enemy>> PEnemies;
+  std::vector<std::shared_ptr<Enemy>> PEnemies;
   std::vector<std::shared_ptr<Enemy>> enemies;
+  std::vector<std::shared_ptr<Enemy>> soulEnemies;
    std::vector<std::shared_ptr<Tile>> tiles;
-  std::vector<PEnemy> *PEnemies;
+  // std::vector<PEnemy> *PEnemies;
   std::vector<std::shared_ptr<Tile>> healthpacks;
   std::vector<int> PEnemyIndex;
   std::vector<int> XPEnemy,YPEnemy,PPEnemy,DPEnemy,SPEnemy;

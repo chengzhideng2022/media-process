@@ -25,6 +25,8 @@ myScene::myScene(QObject *parent) : QGraphicsScene{parent}
 // prot= world->getProtagonist();
  height = m->getHeight();
  width = m->getWidth();
+ PEnemies = m->getPEnemies();
+ soulEnemies = m->getsoulEnemies();
  flag=1; checkProtNeedDieFlag=10;
  attackFlag=1;
  soulFlag=1;
@@ -42,6 +44,7 @@ timerUseHealth = new QTimer(this);
 timerShowPoisodisapperEffect =new QTimer(this);
 timerShowProtDie = new QTimer(this);
 timerEnemyAttack = new QTimer(this);timerPEnemyAttack = new QTimer(this);
+array=m->GetColorDepth();  qDebug()<<array[1][2];
 drawWorld(scalNum);
 
 setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -157,44 +160,29 @@ else if(event->key() == Qt::Key_L)
 }
 
 void myScene::drawWorld(int scalNum)
-{
-
-    int rows = height;
-    int cols = width;
-
-    // 动态分配一个 rows * cols 大小的数组
-    array = new float*[rows];
-    for (int i = 0; i < rows; i++) {
-    array[i] = new float[cols];}
+{    QPixmap pix;
 
     for ( auto &tile : tiles )
         {
             std::shared_ptr<Tile> newTile = std::move(tile);
-            float val = newTile->getValue();
             int tx = newTile->getXPos();
-            int ty = newTile->getYPos();
-            if(val == std::numeric_limits<float>::infinity()){
-                newTile->setValue(0);
-            }
-
-             val = newTile->getValue();
-             array[ty][tx]=val;
+            int ty = newTile->getYPos();     
+            float val= array[ty][tx];
             QGraphicsRectItem *rectItem = new QGraphicsRectItem();
             rectItem->setRect(newTile->getXPos()*scalNum,newTile->getYPos()*scalNum, scalNum, scalNum);
-            rectItem-> setPen(QPen(Qt::NoPen));;
+            rectItem-> setPen(QPen(Qt::NoPen));
             rectItem->setBrush(QBrush(QColor(val*255, 255, val*255)));
             this->addItem(rectItem);
         }
 
-       int i = -1;
+
+    int i = -1;
+
     for ( auto &enemy : enemies )
     {
         i++;
         QPixmap pix;
-        qDebug()<<QString::fromStdString(enemy->serialize());
-        qDebug()<<(QString::fromStdString(enemy->serialize())).split(',').length()-1;
-        qDebug()<<i<<"yyyyyyyyy";
-       // qDebug()<<stringArray[0]<<"yyyyyyyyy"<<stringArray[1]<<"yyyyyyyyy"<<stringArray[2]<<"yyyyyyyyy"<<stringArray[3]<<"yyyyyyyyy";
+
         int numberOfparameter =(QString::fromStdString(enemy->serialize())).split(',').length()-1;
 
         if(numberOfparameter==3)
@@ -212,7 +200,7 @@ void myScene::drawWorld(int scalNum)
            int p=stringArray[4].toInt(0);PPEnemy.push_back(p);
            pix.load(":/myimg/Skeleton21.png");
            PEnemyIndex.push_back(i);
-           XPEnemy.push_back(x);
+
 
         }
 
@@ -222,10 +210,41 @@ void myScene::drawWorld(int scalNum)
             enemypixmapItem[i]->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
             enemypixmapItem[i]->setZValue(1);      
             this->addItem(enemypixmapItem[i]);
-
-
     }
-      int j=0;
+
+  // qDebug()<<m->getsoulEnemies().size()<<"yyyyyyyyyyyyyyy";
+/*
+    qDebug()<<"222222222222222222222222222222222";
+    for (auto &enemy : soulEnemies)
+    {  i++; // qDebug()<<QString::fromStdString(enemy->serialize());
+        qDebug()<<"111111111111111111111111";
+        QPixmap pix; pix.load(":/myimg/Soul11.png"); qDebug()<<"333333333333333333333333333";
+         pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);qDebug()<<"44444444444444444444444444";
+         enemypixmapItem[i] = new QGraphicsPixmapItem();qDebug()<<"555555555555555555555555555555";
+         enemypixmapItem[i]->setPixmap(pix);qDebug()<<"6666666666666666666666666666666";
+         enemypixmapItem[i]->setPos((enemy->getXPos())*scalNum, (enemy->getYPos())*scalNum);qDebug()<<"777777777777777777777777777777";
+         enemypixmapItem[i]->setZValue(1);qDebug()<<"8888888888888888888888888888";
+         this->addItem(enemypixmapItem[i]);qDebug()<<"9999999999999999999999999999999";
+    }
+    for (auto &enemy : PEnemies)
+    {i++; // qDebug()<<QString::fromStdString(enemy->serialize());
+        qDebug()<<"0000000000000000000000000000";
+         QPixmap pix;pix.load(":/myimg/Skeleton21.png");
+         pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
+         enemypixmapItem[i] = new QGraphicsPixmapItem();
+         enemypixmapItem[i]->setPixmap(pix);
+         enemypixmapItem[i]->setPos(enemy->getXPos()*scalNum, enemy->getYPos()*scalNum);
+         enemypixmapItem[i]->setZValue(1);
+         this->addItem(enemypixmapItem[i]);
+    }
+*/
+
+
+
+
+
+
+    int j=0;
     for ( auto &healthpack : healthpacks)
     {
 
@@ -239,7 +258,7 @@ void myScene::drawWorld(int scalNum)
          this->addItem(healthpixmapItem[j]);
          j++;
     }
-    QPixmap pix;
+
     pix.load(":/myimg/Run11.png");
     pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
     protpixmapItem = new QGraphicsPixmapItem();
@@ -616,10 +635,11 @@ void myScene::showPEnemyAttack(){
 }
 void myScene::getmousePressEvent(QMouseEvent *event)
  {
+    /*
      cursorPoint=event->pos();
      int x=cursorPoint.x();
      int y=cursorPoint.y();
      int xp=m->getProtY();
      int yp=m->getProtX();
-
+*/
  }

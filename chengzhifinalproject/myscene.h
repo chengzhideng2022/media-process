@@ -60,7 +60,7 @@ void showPEnemyAttack();
 //void moveView();
 
 private:
- model *m;
+model *m;
  myItem *item;
  int height;
  int width;
@@ -93,7 +93,8 @@ std::unique_ptr<Protagonist> prot;
 std::array<std::unique_ptr<Protagonist>,4> protList;
 //std::vector<std::unique_ptr<Enemy>> PEnemies;
 std::vector<std::shared_ptr<Enemy>> enemies;
-std::vector<PEnemy> *PEnemies;
+std::vector<std::shared_ptr<Enemy>>PEnemies;
+std::vector<std::shared_ptr<Enemy>>soulEnemies;
 std::vector<std::shared_ptr<Tile>> healthpacks;
 std::vector<int> PEnemyIndex;
 std::vector<int> XPEnemy,YPEnemy,PPEnemy,DPEnemy,SPEnemy;
