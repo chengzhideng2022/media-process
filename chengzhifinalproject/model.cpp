@@ -139,7 +139,7 @@ std::vector<int> model::getPEnemyIndex()
     return PEnemyIndex;
 }
 float model::checkwall(int x, int y)
-{   // GetColorDepth();
+{
 
 float difficulty = array[y][x];
 
@@ -170,3 +170,25 @@ float ** model::GetColorDepth()
     return array;
 }
 
+int model::checkIsEnemy(int x, int y)
+{
+    x=prot->getXPos();
+    y=prot->getYPos();
+    int i=0;
+     for ( auto &enemy : enemies )
+     {
+         if((x==enemy->getXPos()-1)&&(y==enemy->getYPos())){
+            return i;
+         }
+       i++;
+     }
+     int j=0;
+     for ( auto &enemy : enemies )
+     {
+         if((x==enemy->getXPos())&&(y==enemy->getYPos())){
+            return j;
+         }
+       j++;
+     }
+     return -1;
+}

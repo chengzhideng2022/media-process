@@ -17,15 +17,16 @@ void userMoveView();
 
 void keyPressEvent(QKeyEvent *event);
 void getmousePressEvent(QMouseEvent *event);
+
+
 int getProtX();
 int getProtY();
-
-
+int getscalNum();
 float checkwall(int x, int y);
 int checkIsEnemy(int x, int y);
 int checkIsHealthBag(int x, int y);
 
-int getscalNum();
+
 void checkProtNeedDie();
 void checkIsPoisoItem();
 

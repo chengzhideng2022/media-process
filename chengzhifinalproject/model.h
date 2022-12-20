@@ -31,7 +31,7 @@ int getindex_enemy();
 float ** GetColorDepth();
 
 float checkwall(int protx, int proty);
-
+int checkIsEnemy(int x, int y);
 
 
 
