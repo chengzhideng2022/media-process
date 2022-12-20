@@ -62,14 +62,8 @@
   prot= world->getProtagonist();
   height = world->getRows() ;
   width = world->getCols();
-  flag=1; checkProtNeedDieFlag=10;
-  attackFlag=1;
-  soulFlag=1;
-  skeletonFlag=1;
-  showUseHealthBagFlag=1;
-  showProtDieFlag=1;
-  showEnemyAttackFlag=1;showPEnemyAttackFlag=1;
-  checkIsPoisoItemFlag=0;
+ checkProtNeedDieFlag=10;
+
 
   timer = new QTimer(this);
   timersoul = new QTimer(this);

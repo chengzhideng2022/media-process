@@ -52,7 +52,6 @@ void showEffectOfPoisoningSignal();
 
 void showEnemyAttackSignal();
 void showPEnemyAttackSignal();
-
 void showEnemydie();
 void showPEnemydie();
 void showProtDie();
@@ -73,7 +72,7 @@ model *m;
  int Num_enemies;
  int Num_healthpacks;
  int Num_P_enemies;
- int flag,checkProtNeedDieFlag,checkIsPoisoItemFlag;
+ int flag;//for prot move
  int attackFlag,showProtDieFlag,showEnemyAttackFlag,showPEnemyAttackFlag;
  int soulFlag,skeletonFlag,showUseHealthBagFlag;
  float ratio;

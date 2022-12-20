@@ -47,9 +47,8 @@ private:
   int Num_enemies;
   int Num_healthpacks;
   int Num_P_enemies;
-  int flag,checkProtNeedDieFlag,checkIsPoisoItemFlag;
-  int attackFlag,showProtDieFlag,showEnemyAttackFlag,showPEnemyAttackFlag;
-  int soulFlag,skeletonFlag,showUseHealthBagFlag;
+  int checkProtNeedDieFlag;
+
   float ratio;
   int index_enemy,index_healthBag;
   int indexInPenemyList=-1;
