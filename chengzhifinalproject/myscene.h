@@ -1,6 +1,7 @@
 #ifndef MYSCENE_H
 #define MYSCENE_H
 #include <map>
+#include "model.h"
 #include "myitem.h"
 #include <QObject>
 #include <QGraphicsScene>
@@ -59,6 +60,7 @@ void showPEnemyAttack();
 //void moveView();
 
 private:
+ model *m;
  myItem *item;
  int height;
  int width;

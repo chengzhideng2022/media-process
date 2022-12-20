@@ -18,7 +18,8 @@ public:
 std::vector<std::shared_ptr<Tile>> getHealthpack();
 std::vector<std::shared_ptr<Tile>> getTiles();
 std::vector<std::shared_ptr<Enemy>> getEnemies();
-int getHeight(); int getWidth();
+int getHeight(); int getWidth(); int getScalNum();
+int getProtX(); int getProtY(); void setProtX(int x);void setProtY(int y);
 private:
   std::shared_ptr<World> world;
 

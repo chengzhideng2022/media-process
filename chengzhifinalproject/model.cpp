@@ -81,3 +81,23 @@ int model::getWidth()
 {
    return width;
 }
+int model::getScalNum()
+{
+    return scalNum;
+}
+int model::getProtX()
+{
+    return prot->getXPos();
+}
+int model::getProtY()
+{
+    return prot->getYPos();
+}
+void model::setProtX(int x)
+{
+    prot->setXPos(x);
+}
+void model::setProtY(int y)
+{
+    prot->setYPos(y);
+}
