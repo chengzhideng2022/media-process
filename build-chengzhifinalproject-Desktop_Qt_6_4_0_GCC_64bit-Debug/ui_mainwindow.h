@@ -33,10 +33,10 @@ public:
     QPushButton *easybutton;
     QPushButton *mediumbutton;
     QPushButton *hardButton_3;
-    QProgressBar *EnergyBar;
+    QProgressBar *EPBar;
     QProgressBar *HPBar;
     QLabel *HPlabel;
-    QLabel *Energylabel;
+    QLabel *EPlabel;
     QStatusBar *statusbar;
     QMenuBar *menubar;
 
@@ -90,15 +90,15 @@ public:
 
         verticalLayout->addWidget(hardButton_3);
 
-        EnergyBar = new QProgressBar(centralwidget);
-        EnergyBar->setObjectName("EnergyBar");
-        EnergyBar->setGeometry(QRect(70, 30, 1001, 23));
-        EnergyBar->setFont(font);
-        EnergyBar->setStyleSheet(QString::fromUtf8("QProgressBar {\n"
+        EPBar = new QProgressBar(centralwidget);
+        EPBar->setObjectName("EPBar");
+        EPBar->setGeometry(QRect(70, 30, 1001, 23));
+        EPBar->setFont(font);
+        EPBar->setStyleSheet(QString::fromUtf8("QProgressBar {\n"
 "  background-color: #FFFFFF;\n"
 "  color:rgb(0, 0, 255);\n"
 "}"));
-        EnergyBar->setValue(24);
+        EPBar->setValue(24);
         HPBar = new QProgressBar(centralwidget);
         HPBar->setObjectName("HPBar");
         HPBar->setGeometry(QRect(70, 0, 1001, 23));
@@ -106,7 +106,6 @@ public:
         HPBar->setStyleSheet(QString::fromUtf8("QProgressBar {\n"
 "  background-color: #FFFFFF;\n"
 "  color:rgb(255, 0, 0);\n"
-" text-color:#000000;\n"
 "}"));
         HPBar->setMaximum(10);
         HPBar->setValue(7);
@@ -116,10 +115,10 @@ public:
         QFont font1;
         font1.setPointSize(14);
         HPlabel->setFont(font1);
-        Energylabel = new QLabel(centralwidget);
-        Energylabel->setObjectName("Energylabel");
-        Energylabel->setGeometry(QRect(10, 30, 54, 17));
-        Energylabel->setFont(font1);
+        EPlabel = new QLabel(centralwidget);
+        EPlabel->setObjectName("EPlabel");
+        EPlabel->setGeometry(QRect(10, 30, 54, 17));
+        EPlabel->setFont(font1);
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -142,7 +141,7 @@ public:
         mediumbutton->setText(QCoreApplication::translate("MainWindow", "medium", nullptr));
         hardButton_3->setText(QCoreApplication::translate("MainWindow", "hard", nullptr));
         HPlabel->setText(QCoreApplication::translate("MainWindow", "HP    :", nullptr));
-        Energylabel->setText(QCoreApplication::translate("MainWindow", "EP", nullptr));
+        EPlabel->setText(QCoreApplication::translate("MainWindow", "EP", nullptr));
     } // retranslateUi
 
 };

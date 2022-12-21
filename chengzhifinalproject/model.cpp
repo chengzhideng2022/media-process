@@ -10,6 +10,7 @@
    model::model(QString mapfrom)
 {
        checkProtNeedDieFlag=10;
+       energy=100;
     index_enemy=0;index_healthBag=0;
     Num_enemies=10;
     Num_healthpacks=3;
@@ -229,4 +230,12 @@ void model::protHurt()
 int model::getProtNeedDieFlag()
 {
     return checkProtNeedDieFlag;
+}
+int model::getEnergyValue()
+{
+    return energy;
+}
+void model::useEnergy()
+{
+
 }

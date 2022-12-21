@@ -22,7 +22,7 @@ std::vector<std::shared_ptr<Tile>> getTiles();
 std::vector<std::shared_ptr<Enemy>> getEnemies();
 int getHeight(); int getWidth(); int getScalNum();
 int getProtX(); int getProtY(); void setProtX(int x);void setProtY(int y);
-int getProtNeedDieFlag();
+int getProtNeedDieFlag(); int getEnergyValue();
 std::vector<std::shared_ptr<Enemy>> getPEnemies();
 std::vector<std::shared_ptr<Enemy>> getsoulEnemies();
 
@@ -30,7 +30,7 @@ std::vector<int> getPPenemy();
 std::vector<int> getPEnemyIndex();
 int getindex_enemy();
 float ** GetColorDepth();
-
+void useEnergy();
 float checkwall(int protx, int proty);
 int checkIsEnemy(int x, int y);
 int checkIsHealthBag(int x, int y);
@@ -49,6 +49,7 @@ private:
   int Num_healthpacks;
   int Num_P_enemies;
   int checkProtNeedDieFlag;
+  int energy;
 
   float ratio;
   int index_enemy,index_healthBag;

@@ -84,7 +84,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QProgressBar" name="EnergyBar">
+   <widget class="QProgressBar" name="EPBar">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -128,7 +128,6 @@
      <string notr="true">QProgressBar {
   background-color: #FFFFFF;
   color:rgb(255, 0, 0);
- text-color:#000000;
 }</string>
     </property>
     <property name="maximum">
@@ -156,7 +155,7 @@
      <string>HP    :</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Energylabel">
+   <widget class="QLabel" name="EPlabel">
     <property name="geometry">
      <rect>
       <x>10</x>

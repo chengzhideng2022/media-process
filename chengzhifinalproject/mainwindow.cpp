@@ -27,8 +27,8 @@ MainWindow::MainWindow(QWidget *parent,QString map) : QMainWindow(parent), ui(ne
      showMaximized();
      connect(this->sc,SIGNAL(moveViewSignal()),this,SLOT(moveView()));
      connect(this->sc,SIGNAL(moveViewSignal()),this,SLOT(showHP()));
-
-     showHP();
+     connect(this->sc,SIGNAL(moveViewSignal()),this,SLOT(showEP()));
+      showHP();showEP();
 }
 
 MainWindow::~MainWindow()
@@ -192,5 +192,6 @@ void MainWindow::showHP()
 }
 void MainWindow::showEP()
 {
-
+int ep =this->sc->getmodel()->getEnergyValue();
+this->ui->EPBar->setValue(ep);
 }
