@@ -31,6 +31,7 @@ std::vector<int> getPEnemyIndex();
 int getindex_enemy();
 float ** GetColorDepth();
 void useEnergy();
+void useHealthpack();
 float checkwall(int protx, int proty);
 int checkIsEnemy(int x, int y);
 int checkIsHealthBag(int x, int y);

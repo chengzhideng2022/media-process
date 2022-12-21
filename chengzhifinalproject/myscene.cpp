@@ -68,7 +68,7 @@ else if(event->key() == Qt::Key_K)
 {
    index_healthBag=checkIsHealthBag(m->getProtX(),m->getProtY());
    if(index_healthBag != -1)
-   {
+   { m->useHealthpack();
        qDebug()<<index_healthBag<<"indexindexinedx";
        QPixmap pix;
        pix.load(":/myimg/soul/Soul_die5.png");

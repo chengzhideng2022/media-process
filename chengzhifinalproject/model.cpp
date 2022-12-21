@@ -239,3 +239,11 @@ void model::useEnergy()
 {
   energy=energy-1;
 }
+void model::useHealthpack()
+{
+   checkProtNeedDieFlag=checkProtNeedDieFlag+5;
+   if (checkProtNeedDieFlag>=10)
+   {
+       checkProtNeedDieFlag=10;
+   }
+}
