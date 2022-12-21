@@ -71,40 +71,31 @@ model *m;
  int height;
  int width;
  int scalNum;
- int Num_enemies;
- int Num_healthpacks;
- int Num_P_enemies;
  int flag;//for prot move
  int attackFlag,showProtDieFlag,showEnemyAttackFlag,showPEnemyAttackFlag;
  int soulFlag,skeletonFlag,showUseHealthBagFlag;
- float ratio;
  int index_enemy,index_healthBag;
  int indexInPenemyList=-1;
-  QPointF cursorPoint;
 
  QTimer *timer,*timerShowPoisodisapperEffect,*timerShowProtDie;
  QTimer *timersoul,*timerSkeleton,*timerUseHealth;
  QTimer *timerEnemyAttack,*timerPEnemyAttack;
  std::unique_ptr<World> world;
  std::vector<std::shared_ptr<Tile>> tiles;
-QImage bg;
+
 QGraphicsPixmapItem *protpixmapItem;
 QGraphicsPixmapItem *enemypixmapItem[20];
 QGraphicsPixmapItem *healthpixmapItem[20];
 QGraphicsRectItem *poisorectItem[8];
-QPixmap pm;
-std::vector<int> PEnemiesX;
-std::vector<int> PEnemiesY;
 std::unique_ptr<Protagonist> prot;
 std::array<std::unique_ptr<Protagonist>,4> protList;
-//std::vector<std::unique_ptr<Enemy>> PEnemies;
+
 std::vector<std::shared_ptr<Enemy>> enemies;
 std::vector<std::shared_ptr<Enemy>>PEnemies;
 std::vector<std::shared_ptr<Enemy>>soulEnemies;
 std::vector<std::shared_ptr<Tile>> healthpacks;
 std::vector<int> PEnemyIndex;
 std::vector<int> XPEnemy,YPEnemy,PPEnemy,DPEnemy,SPEnemy;
-//std::vector<std::shared_ptr<poisonedTile>> poisonedTiles;
 bool gameStop = false;
 char activeProtsAmount = 1;
 float **array;
