@@ -8,9 +8,10 @@
 #include <map>
 #include "model.h"
 #define TIMER_TIMEOUT   (500)
-myScene::myScene(QObject *parent) : QGraphicsScene{parent}
+myScene::myScene(QObject *parent,QString mapfrom) : QGraphicsScene{parent}
 {
-    m= new model();
+
+    m= new model(mapfrom);
     index_enemy=0;index_healthBag=0;
 
  enemies = m->getEnemies();
@@ -565,6 +566,15 @@ void myScene::showPEnemyAttack(){
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
      enemypixmapItem[index_enemy]->setPixmap(pix);
 
+}
+void myScene::showPath()
+{
+    QGraphicsRectItem *rectItem = new QGraphicsRectItem();
+    rectItem->setRect(getProtX()*scalNum,getProtY()*scalNum, scalNum, scalNum);
+    rectItem-> setPen(QPen(Qt::NoPen));
+    rectItem->setBrush(QBrush(QColor(0, 255, 0)));
+    rectItem ->setOpacity(0.1);
+    this->addItem(rectItem);
 }
 void myScene::getmousePressEvent(QMouseEvent *event)
  {

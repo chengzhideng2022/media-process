@@ -8,13 +8,14 @@
 #include <vector>
 #include <QTimer>
 #include <QObject>
+#include <QString>
 #include <QKeyEvent>
 #include<bits/stdc++.h>
 class model : public QGraphicsScene
 {
      Q_OBJECT
 public:
-    model();
+    model(QString map = ":/img/worldmap.png");
 
 std::vector<std::shared_ptr<Tile>> getHealthpack();
 std::vector<std::shared_ptr<Tile>> getTiles();
@@ -52,7 +53,7 @@ private:
   float ratio;
   int index_enemy,index_healthBag;
   int indexInPenemyList=-1;
-
+ QString map;
   std::vector<int> PEnemiesX;
   std::vector<int> PEnemiesY;
   std::shared_ptr<Protagonist> prot;

@@ -6,19 +6,20 @@
 #include <QObject>
 #include <QGraphicsScene>
 #include <QMouseEvent>
+
 using namespace std;
 class myScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit myScene(QObject *parent = nullptr);
+    explicit myScene(QObject *parent = nullptr,QString maps = ":/img/worldmap.png");
 void drawWorld(int scal);
 void userMoveView();
-
+void showPath();
 void keyPressEvent(QKeyEvent *event);
 void getmousePressEvent(QMouseEvent *event);
 
-
+//these func are all get return from model
 int getProtX();
 int getProtY();
 int getscalNum();
@@ -29,7 +30,7 @@ int checkIsHealthBag(int x, int y);
 
 void checkProtNeedDie();
 void checkIsPoisoItem();
-
+//these func are all get return from model
 
 
 
@@ -79,7 +80,7 @@ model *m;
  int index_enemy,index_healthBag;
  int indexInPenemyList=-1;
   QPointF cursorPoint;
- //std::unordered_map<int, Enemy> enemiesList;
+
  QTimer *timer,*timerShowPoisodisapperEffect,*timerShowProtDie;
  QTimer *timersoul,*timerSkeleton,*timerUseHealth;
  QTimer *timerEnemyAttack,*timerPEnemyAttack;

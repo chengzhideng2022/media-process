@@ -7,7 +7,7 @@
 #include <vector>
 #include <QString>
 #include <QKeyEvent>
-   model::model()
+   model::model(QString mapfrom)
 {
     index_enemy=0;index_healthBag=0;
     Num_enemies=10;
@@ -15,8 +15,8 @@
     ratio=0.5;
     Num_P_enemies= ratio*Num_enemies;
    scalNum=100;
- QString map = ":/img/worldmap.png";
 
+   map=mapfrom;
   world=  std::make_shared<World>();
   world->createWorld(map,Num_enemies,Num_healthpacks,ratio);
 
@@ -216,7 +216,7 @@ bool model::checkProtNeedDie()
 {
     if (checkProtNeedDieFlag<=0)
     {
-        return true;qDebug()<<"diediediediedie";
+        return true;
     }
     else {return false;}
 }

@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "chosemappage.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -17,7 +18,17 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWindow w;
-    w.show();
+    choseMapPage c;
+    c.show();
+  //  MainWindow w;
+   /*
+    connect(c.getui()->mapbutton1,&QPushButton::clicked,[=](){
+        c.hide();
+        w.show();
+    });
+    */
+
+    //MainWindow w;
+   // w.show();
     return a.exec();
 }

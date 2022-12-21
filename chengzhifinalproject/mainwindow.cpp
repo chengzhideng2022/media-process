@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "qmenubar.h"
 #include "ui_mainwindow.h"
 #include <QWheelEvent>
 #include <QKeyEvent>
@@ -8,18 +7,10 @@
 #include <QToolBar>
 
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent,QString map) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //创建一个菜单栏,最多可以有一个
-    QMenuBar *bar = menuBar();
-    //将菜单栏放入窗口中
-    QMenu *closeMenu = bar->addMenu("close");
-    //创建菜单项
-    closeMenu->addAction("close");
-    setMenuBar(bar);
-    QToolBar *toolBar = new QToolBar(this);
-    addToolBar(Qt::LeftToolBarArea,toolBar);
+
     m_qrScaledNum=1;
 
     this->ui->gameview->setMouseTracking(true);
@@ -28,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->ui->gameview->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     this->ui->gameview->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
 
-    this->sc = new myScene;
+    this->sc = new myScene(nullptr,map);
     this->ui->gameview->setScene(sc);
     this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
     this->ui->gameview->grabKeyboard();
