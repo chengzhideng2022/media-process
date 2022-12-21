@@ -96,7 +96,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
     //this->ui->gameview->verticalScrollBar()->setverticalScrollBar(int(cursorPoint.y() - viewHeight * vScale));
 }
 
-void MainWindow::moveView()
+void MainWindow::moveView() //Vision follow the protagonist
 {
     int n = this->sc->getscalNum();
 
@@ -108,5 +108,73 @@ void MainWindow::moveView()
        // this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
      this->ui->gameview->centerOn(x*n, y*n);
 
+}
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    qDebug()<<"cursorcursorcursorcursorcursor";
+     cursorPoint=event->pos();
+    QKeyEvent *keyEventLeft = new QKeyEvent(QKeyEvent::KeyPress, Qt::Key_Left, Qt::NoModifier);
+    QKeyEvent *keyEventRight = new QKeyEvent(QKeyEvent::KeyPress, Qt::Key_Right, Qt::NoModifier);
+    QKeyEvent *keyEventUp = new QKeyEvent(QKeyEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
+    QKeyEvent *keyEventDown = new QKeyEvent(QKeyEvent::KeyPress, Qt::Key_Down, Qt::NoModifier);
+
+       int ScalNum =this->sc->getmodel()->getScalNum();
+     //kevent->key() = Qt::Key_Left;
+     int x=cursorPoint.x();
+     int y=cursorPoint.y();
+     x=x/ScalNum;
+     y=y/ScalNum;
+     qDebug()<<x<<"xxxxxxxx";qDebug()<<y<<"yyyyyyy";
+     int xp=this->sc->getProtX();
+     int yp=this->sc->getProtY();
+     if(x>xp)
+     {
+         for (int i=0;i<x-xp;i++)
+         {
+           this->sc->keyPressEvent(keyEventRight);
+         }
+         if(y>yp)
+         {
+             for (int i=0;i<y-yp;i++)
+             {
+            this->sc->keyPressEvent(keyEventDown);
+             }
+         }
+         else
+         {
+             for (int i=0;i<yp-y;i++)
+             {
+            this->sc->keyPressEvent(keyEventUp);
+             }
+         }
+
+     }
+      else
+     {
+         for (int i=0;i<xp-x;i++)
+         {
+           this->sc->keyPressEvent(keyEventLeft);
+         }
+         if(y>yp)
+         {
+             for (int i=0;i<y-yp;i++)
+             {
+            this->sc->keyPressEvent(keyEventDown);
+             }
+         }
+         else
+         {
+             for (int i=0;i<yp-y;i++)
+             {
+            this->sc->keyPressEvent(keyEventUp);
+             }
+         }
+
+     }
+
+      if (event->button() == Qt::LeftButton) {
+qDebug()<<"cursorcursorcursorcursorcursor";}
+
+ qDebug()<<"mousemousemouse";
 }
 

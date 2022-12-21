@@ -19,7 +19,7 @@ public:
     ~MainWindow();
    //  explicit choseMapPage(QWidget *parent = 0);
     void wheelEvent(QWheelEvent *event);
-    void getmousePressEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 
     //void keyPressEvent(QKeyEvent *event);
