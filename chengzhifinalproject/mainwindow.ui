@@ -35,6 +35,21 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+  background-color: #FF0000;
+  color: #FFFFFF;
+}</string>
+    </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
@@ -69,7 +84,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QProgressBar" name="HPBar">
+   <widget class="QProgressBar" name="EnergyBar">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -78,11 +93,23 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+  background-color: #FFFFFF;
+  color:rgb(0, 0, 255);
+}</string>
+    </property>
     <property name="value">
      <number>24</number>
     </property>
    </widget>
-   <widget class="QProgressBar" name="energyBar_2">
+   <widget class="QProgressBar" name="HPBar">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -91,8 +118,24 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+  background-color: #FFFFFF;
+  color:rgb(255, 0, 0);
+ text-color:#000000;
+}</string>
+    </property>
+    <property name="maximum">
+     <number>10</number>
+    </property>
     <property name="value">
-     <number>24</number>
+     <number>7</number>
     </property>
    </widget>
    <widget class="QLabel" name="HPlabel">
@@ -128,7 +171,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Energy:</string>
+     <string>EP</string>
     </property>
    </widget>
   </widget>

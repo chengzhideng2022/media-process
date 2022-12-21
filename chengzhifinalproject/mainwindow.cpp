@@ -26,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent,QString map) : QMainWindow(parent), ui(ne
     //showFullScreen();
      showMaximized();
      connect(this->sc,SIGNAL(moveViewSignal()),this,SLOT(moveView()));
+     connect(this->sc,SIGNAL(moveViewSignal()),this,SLOT(showHP()));
+
+     showHP();
 }
 
 MainWindow::~MainWindow()
@@ -102,9 +105,8 @@ void MainWindow::moveView() //Vision follow the protagonist
 
      int x = this->sc->getProtX();
 
-     qDebug()<<x;
      int y = this->sc->getProtY();
-     qDebug()<<y;
+     qDebug()<<x<<"   "<<y;
        // this->ui->gameview->centerOn(this->sc->getProtX(), this->sc->getProtY());
      this->ui->gameview->centerOn(x*n, y*n);
 
@@ -178,3 +180,17 @@ qDebug()<<"cursorcursorcursorcursorcursor";}
  qDebug()<<"mousemousemouse";
 }
 
+void MainWindow::showHP()
+{
+     int hp =this->sc->getmodel()->getProtNeedDieFlag();
+     QPalette palette = this->ui->HPBar->palette();
+     palette.setColor(QPalette::Highlight, Qt::red);
+     this->ui->HPBar->setFormat("%p%");
+     this->ui->HPBar->setPalette(palette);
+     this->ui->HPBar->setValue(hp);
+
+}
+void MainWindow::showEP()
+{
+
+}

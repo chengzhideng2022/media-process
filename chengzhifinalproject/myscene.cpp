@@ -581,3 +581,7 @@ model* myScene::getmodel()
 {
     return m;
 }
+void myScene::showHP()
+{
+
+}

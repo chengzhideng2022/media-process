@@ -5,7 +5,7 @@
 #include "myscene.h"
 #include <QPoint>
 #include <QGraphicsView>
-#include "chosemappage.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,16 +17,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr,QString map = ":/img/worldmap.png");
     ~MainWindow();
-   //  explicit choseMapPage(QWidget *parent = 0);
+
     void wheelEvent(QWheelEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
 
-    //void keyPressEvent(QKeyEvent *event);
- //   void keyReleaseEvent(QKeyEvent *event);
-   // void userMove();
+
 private slots:
    void moveView();
+   void showHP();
+   void showEP();
 private:
     Ui::MainWindow *ui;
     myScene *sc;

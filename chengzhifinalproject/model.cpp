@@ -9,6 +9,7 @@
 #include <QKeyEvent>
    model::model(QString mapfrom)
 {
+       checkProtNeedDieFlag=10;
     index_enemy=0;index_healthBag=0;
     Num_enemies=10;
     Num_healthpacks=3;
@@ -62,7 +63,7 @@
   prot= world->getProtagonist();
   height = world->getRows() ;
   width = world->getCols();
- checkProtNeedDieFlag=10;
+
 
 
   timer = new QTimer(this);
@@ -224,4 +225,8 @@ void model::protHurt()
 {
     checkProtNeedDieFlag=checkProtNeedDieFlag-1;
     qDebug()<<checkProtNeedDieFlag<<"checkProtNeedDieFlag";
+}
+int model::getProtNeedDieFlag()
+{
+    return checkProtNeedDieFlag;
 }
