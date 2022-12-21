@@ -174,10 +174,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
      }
 
-      if (event->button() == Qt::LeftButton) {
-qDebug()<<"cursorcursorcursorcursorcursor";}
 
- qDebug()<<"mousemousemouse";
+     delete keyEventLeft;
+     delete keyEventRight;
+     delete keyEventDown;
+     delete keyEventUp;
+
 }
 
 void MainWindow::showHP()
