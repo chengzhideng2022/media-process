@@ -577,16 +577,6 @@ void myScene::showPath()
     rectItem ->setOpacity(0.5);
     this->addItem(rectItem);
 }
-void myScene::mousePressEvent(QMouseEvent *event)
- {
-
-     cursorPoint=event->pos();
-     int x=cursorPoint.x();
-     int y=cursorPoint.y();
-     int xp=m->getProtY();
-     int yp=m->getProtX();
-     qDebug()<<"mousemousemouse";
- }
 model* myScene::getmodel()
 {
     return m;

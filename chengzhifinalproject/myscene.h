@@ -17,7 +17,7 @@ void drawWorld(int scal);
 void userMoveView();
 void showPath();
 void keyPressEvent(QKeyEvent *event);
-void mousePressEvent(QMouseEvent *event);
+//void mousePressEvent(QMouseEvent *event);
 model* getmodel();
 //these func are all get return from model
 int getProtX();

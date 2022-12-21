@@ -36,7 +36,7 @@
          }
          else
 
-         {
+         {   // PEnemy *newpenemy =new PEnemy(1,1,1);
            //  QVector<QString> stringArray(5);
             //  stringArray=(QString::fromStdString(snewEnemy->serialize())).split(',');
             //  int p=stringArray[4].toInt(0);PPEnemy.push_back(p);
