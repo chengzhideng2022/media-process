@@ -62,7 +62,7 @@ void showPoisoningDisappear();
 
 void showEnemyAttack();
 void showPEnemyAttack();
-void showHP();
+
 //void moveView();
 
 private:

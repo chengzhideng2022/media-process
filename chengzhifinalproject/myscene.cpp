@@ -49,7 +49,7 @@ setItemIndexMethod(QGraphicsScene::NoIndex);
 
 void myScene::keyPressEvent(QKeyEvent *event)
 {
-
+    m->useEnergy();
 if(event->key() == Qt::Key_J)
 {
    attackTimeSignal();
@@ -78,13 +78,7 @@ else if(event->key() == Qt::Key_K)
 
 
   }
-else if(event->key() == Qt::Key_L)
-{
 
-    protDieSignal();
-
-
-  }
 else if (event->key() == Qt::Key_Left && checkwall(getProtX()-1,getProtY())) { //move left
   userMoveView(); protpixmapItem ->moveBy(-scalNum,0); m->setProtX(getProtX()-1);emit moveViewSignal();
   index_enemy=checkIsEnemy( getProtX(),getProtY());  if (index_enemy != -1) {
@@ -581,7 +575,4 @@ model* myScene::getmodel()
 {
     return m;
 }
-void myScene::showHP()
-{
 
-}

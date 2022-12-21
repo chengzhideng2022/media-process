@@ -237,5 +237,5 @@ int model::getEnergyValue()
 }
 void model::useEnergy()
 {
-
+  energy=energy-1;
 }
