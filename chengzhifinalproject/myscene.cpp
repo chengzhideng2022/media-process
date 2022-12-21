@@ -85,7 +85,7 @@ else if(event->key() == Qt::Key_L)
 
 
   }
-else if (event->key() == Qt::Key_Left && checkwall(getProtX()-1,getProtY())) { // 向左移动
+else if (event->key() == Qt::Key_Left && checkwall(getProtX()-1,getProtY())) { //move left
   userMoveView(); protpixmapItem ->moveBy(-scalNum,0); m->setProtX(getProtX()-1);emit moveViewSignal();
   index_enemy=checkIsEnemy( getProtX(),getProtY());  if (index_enemy != -1) {
   if (! enemies[index_enemy]->getDefeated()) {
@@ -299,6 +299,7 @@ void myScene::userMoveView()
 
      pix=pix.scaled(scalNum, scalNum, Qt::KeepAspectRatio);
      protpixmapItem->setPixmap(pix);
+     showPath();
    }
 
 void myScene::protAttackView()
@@ -572,8 +573,8 @@ void myScene::showPath()
     QGraphicsRectItem *rectItem = new QGraphicsRectItem();
     rectItem->setRect(getProtX()*scalNum,getProtY()*scalNum, scalNum, scalNum);
     rectItem-> setPen(QPen(Qt::NoPen));
-    rectItem->setBrush(QBrush(QColor(0, 255, 0)));
-    rectItem ->setOpacity(0.1);
+    rectItem->setBrush(QBrush(QColor(255, 255, 0)));
+    rectItem ->setOpacity(0.5);
     this->addItem(rectItem);
 }
 void myScene::getmousePressEvent(QMouseEvent *event)
