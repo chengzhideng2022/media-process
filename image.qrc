@@ -1,0 +1,100 @@
+<RCC>
+    <qresource prefix="/pic">
+        <file>img/maze1.png</file>
+        <file>img/maze2.png</file>
+        <file>img/maze3.png</file>
+        <file>img/worldmap.png</file>
+        <file>img/worldmap4.png</file>
+        <file>img/gameover.png</file>
+        <file>img/Run1.png</file>
+        <file>img/Run2.png</file>
+        <file>img/Run3.png</file>
+        <file>img/Run4.png</file>
+        <file>img/Run11.png</file>
+        <file>img/Run21.png</file>
+        <file>img/Run31.png</file>
+        <file>img/Run41.png</file>
+        <file>img/Skeleton_Attack21.png</file>
+        <file>img/Skeleton_die41.png</file>
+        <file>img/Skeleton21.png</file>
+        <file>img/Soul_attack31.png</file>
+        <file>img/Soul_die11.png</file>
+        <file>img/Soul11.png</file>
+        <file>img/pill1.png</file>
+        <file>img/pill2.png</file>
+        <file>img/pill3.png</file>
+        <file>img/pill4.png</file>
+    </qresource>
+    <qresource prefix="/Accumulate">
+        <file>img/Accumulate/Angel Feature1.png</file>
+        <file>img/Accumulate/Angel Feature2.png</file>
+        <file>img/Accumulate/GavielG_Accu1.png</file>
+        <file>img/Accumulate/GavielG_Accu2.png</file>
+        <file>img/Accumulate/GavielG_Accu3.png</file>
+        <file>img/Accumulate/GavielG_Accu4.png</file>
+        <file>img/Accumulate/GavielG_Accu5.png</file>
+        <file>img/Accumulate/GavielG_Accu6.png</file>
+    </qresource>
+    <qresource prefix="/Buff">
+        <file>img/Buff/GavielG_Buff1.png</file>
+        <file>img/Buff/GavielG_Buff2.png</file>
+        <file>img/Buff/GavielG_Buff3.png</file>
+        <file>img/Buff/GavielG_Buff4.png</file>
+        <file>img/Buff/GavielG_Buff5.png</file>
+    </qresource>
+    <qresource prefix="/combo">
+        <file>img/combo/GavielG_Combo1.png</file>
+        <file>img/combo/GavielG_Combo2.png</file>
+        <file>img/combo/GavielG_Combo3.png</file>
+        <file>img/combo/GavielG_Combo4.png</file>
+        <file>img/combo/GavielG_Combo5.png</file>
+        <file>img/combo/GavielG_Combo6.png</file>
+        <file>img/combo/GavielG_Combo7.png</file>
+        <file>img/combo/GavielG_Combo8.png</file>
+        <file>img/combo/GavielG_Combo9.png</file>
+    </qresource>
+    <qresource prefix="/Die">
+        <file>img/Die/GavielG_Die1.png</file>
+        <file>img/Die/GavielG_Die2.png</file>
+        <file>img/Die/GavielG_Die3.png</file>
+        <file>img/Die/GavielG_Die4.png</file>
+        <file>img/Die/GavielG_Die5.png</file>
+    </qresource>
+    <qresource prefix="/skeleto">
+        <file>img/skeleto/Skeleton_Attack1.png</file>
+        <file>img/skeleto/Skeleton_Attack2.png</file>
+        <file>img/skeleto/Skeleton_Attack3.png</file>
+        <file>img/skeleto/Skeleton_Attack4.png</file>
+        <file>img/skeleto/Skeleton_die1.png</file>
+        <file>img/skeleto/Skeleton_die2.png</file>
+        <file>img/skeleto/Skeleton_die3.png</file>
+        <file>img/skeleto/Skeleton_die4.png</file>
+        <file>img/skeleto/Skeleton_fly.png</file>
+        <file>img/skeleto/Skeleton_Idle1.png</file>
+        <file>img/skeleto/Skeleton_Idle2.png</file>
+        <file>img/skeleto/Skeleton_Idle3.png</file>
+        <file>img/skeleto/Skeleton_Idle4.png</file>
+        <file>img/skeleto/Skeleton_walk1.png</file>
+        <file>img/skeleto/Skeleton_walk2.png</file>
+        <file>img/skeleto/Skeleton_walk3.png</file>
+        <file>img/skeleto/Skeleton_walk4.png</file>
+    </qresource>
+    <qresource prefix="/soul">
+        <file>img/soul/die5.png</file>
+        <file>img/soul/Soul_attack1.png</file>
+        <file>img/soul/Soul_attack2.png</file>
+        <file>img/soul/Soul_attack3.png</file>
+        <file>img/soul/Soul_attack4.png</file>
+        <file>img/soul/Soul_die1.png</file>
+        <file>img/soul/Soul_die2.png</file>
+        <file>img/soul/Soul_die3.png</file>
+        <file>img/soul/Soul_die4.png</file>
+        <file>img/soul/Soul_fly.png</file>
+        <file>img/soul/Soul1.png</file>
+        <file>img/soul/Soul2.png</file>
+        <file>img/soul/Soul3.png</file>
+    </qresource>
+    <qresource prefix="/Stuck">
+        <file>img/Stuck/GavielG_Charge.png</file>
+    </qresource>
+</RCC>
