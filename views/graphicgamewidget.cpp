@@ -151,13 +151,6 @@ void GraphicGameWidget::drawWorld()
 
         if(tile->getValue()==std::numeric_limits<float>::infinity()){
             worldImage.setPixelColor(xpos, ypos, QColor(0,0,0));
-        }else if(tile->getValue()==1)
-        {
-            worldImage.setPixelColor(xpos, ypos, QColor(
-                                    255,
-                                    255,
-                                    255)
-                                );
         }
         else{
 
@@ -557,13 +550,6 @@ void GraphicGameWidget::originalColorTile(int x, int y)
 
     if(tile->getValue()==std::numeric_limits<float>::infinity()){
         worldImage.setPixelColor(x, y, QColor(0,0,0));
-    }else if(tile->getValue()==1)
-    {
-        worldImage.setPixelColor(x, y, QColor(
-                                255,
-                                255,
-                                255)
-                            );
     }
     else{
 

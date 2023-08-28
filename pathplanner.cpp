@@ -71,6 +71,7 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::findPath(int xStart, int yStar
 
 std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar(std::function<float(QPoint&)> heuristic)
 {
+    std::cout << "Start" << std::endl;
     auto start = std::chrono::high_resolution_clock::now();
 
 
@@ -105,16 +106,49 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar(std::function<float(QPoi
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
             std::cout << "Time taken by success path finder: " << duration << " microseconds" << std::endl;
+            std::cout << "steps: " << count <<std::endl;
             return actionsToThisNode(currentNode);
 
         }
 
-        for(auto& tuple : getSuccessors(currentNode->state))
+        for(auto i{0}; i<4; i++)
         {
-            QPoint nearbyPoint;
+            int newX{0};
+            int newY{0};
             Direction direction;
-            float cost;
-            std::tie(nearbyPoint, direction, cost) = tuple;
+            switch (i) {
+            case 0:
+                newX = currentNode->state.rx()-1;
+                newY = currentNode->state.ry();
+                direction = Direction::Left;
+                break;
+            case 1:
+                newX = currentNode->state.rx()+1;
+                newY = currentNode->state.ry();
+                direction = Direction::Right;
+                break;
+            case 2:
+                newX = currentNode->state.rx();
+                newY = currentNode->state.ry()-1;
+                direction = Direction::Up;
+                break;
+            case 3:
+                newX = currentNode->state.rx();
+                newY = currentNode->state.ry()+1;
+                direction = Direction::Down;
+            default:
+                break;
+            }
+
+            if(!world->positionAvaliable(newX, newY))
+            {
+                continue;
+            }
+
+            float cost = world->getTile(newX, newY)->getValue() * 256;
+
+            QPoint nearbyPoint(newX, newY);
+
 
 
             auto equal = [&](std::shared_ptr<PlannerNode>const& node){
@@ -132,14 +166,15 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar(std::function<float(QPoi
                 {
                     if(currentNode->givenCost + cost < (*iteratorFrontier)->givenCost)// if(currentNode->givenCost + cost+ heuristicWeight*heuristic(nearbyPoint) < (*iteratorFrontier)->finalCost)
                     {
-                        (*iteratorFrontier)->previousNode = currentNode;
-                        (*iteratorFrontier)->direction = direction;
-                        (*iteratorFrontier)->givenCost = currentNode->givenCost + cost;
-                        (*iteratorFrontier)->finalCost = (*iteratorFrontier)->givenCost + heuristic(nearbyPoint);
-                        auto nodeF = (*iteratorFrontier);
+                        //std::shared_ptr<PlannerNode> nodeF = (*iteratorFrontier);
+                       // frontier.erase(iteratorFrontier);
+                       auto nodeF =  frontier.extract(iteratorFrontier);
+                        nodeF.value()->previousNode = currentNode;
+                        nodeF.value()->direction = direction;
+                        nodeF.value()->givenCost = currentNode->givenCost + cost;
+                        nodeF.value()->finalCost = nodeF.value()->givenCost + heuristic(nearbyPoint);
 
-                        frontier.erase(iteratorFrontier);
-                        frontier.insert(nodeF);
+                        frontier.insert(nodeF.value());
                         continue;
 
                     }
@@ -151,15 +186,17 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar(std::function<float(QPoi
 
                 if(reachedIt!=reached.end())
                 {
-                    auto node = (*reachedIt);
-                    if(currentNode->givenCost + cost < node->givenCost )//if(currentNode->givenCost + cost+ heuristicWeight*heuristic(nearbyPoint) < node->finalCost )
+
+                    if(currentNode->givenCost + cost < (*reachedIt)->givenCost )//if(currentNode->givenCost + cost+ heuristicWeight*heuristic(nearbyPoint) < node->finalCost )
                     {
+                        auto node = (*reachedIt);
+                        reached.erase(reachedIt);
                         node->previousNode = currentNode;
                         node->direction = direction;
                         node->givenCost = currentNode->givenCost + cost;
                         node->finalCost = node->givenCost + heuristic(nearbyPoint);
 
-                        reached.erase(reachedIt);
+
                         frontier.insert(node);
                         continue;
                     }
@@ -181,11 +218,138 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar(std::function<float(QPoi
         }
 
         count++;
-        std::cout << count<< std::endl;
-
 
         reached.insert(currentNode->state, currentNode);
 
+
+    }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    std::cout << "Time taken by failed path finder: " << duration << " microseconds" << std::endl;
+
+    return nullptr;
+
+}
+
+std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar4(std::function<float(QPoint&)> heuristic)
+{
+    auto start = std::chrono::high_resolution_clock::now();
+
+    for(auto& node: worldNodes)
+    {
+        node->direction = Direction::NoDirection;
+        node->finalCost = -1;
+        node->givenCost = -1;
+        node->previousNode = nullptr;
+    }
+
+    auto end1 = std::chrono::high_resolution_clock::now();
+    auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(end1 - start).count();
+    std::cout << "Loop: " << duration1 << " microseconds" << std::endl;
+
+    auto greater{ [](PlannerNode const& n1, PlannerNode const& n2)
+        {
+            return n1.finalCost > n2.finalCost;
+        }
+                };
+    std::priority_queue<PlannerNode, std::vector<PlannerNode>, decltype(greater)> frontier(greater);
+
+
+    std::shared_ptr<PlannerNode> startNode = worldNodes[startState.ry()*world->getCols()+startState.rx()];
+    startNode->givenCost = 0;
+    startNode->finalCost = startNode->givenCost + heuristic(startState);
+    frontier.push(*startNode);
+
+    int count{0};
+
+    while(!frontier.empty())
+    {
+        PlannerNode currentNode = frontier.top();
+        frontier.pop();
+
+        if(isGoalState(currentNode.state))
+        {
+            auto end = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+            std::cout << "Time taken by success path finder: " << duration << " microseconds" <<" ,steps: " <<count<<std::endl;
+            return actionsToThisNode(worldNodes[currentNode.state.ry()*world->getCols()+currentNode.state.rx()]);
+
+        }
+
+
+        for(int i = 0 ; i < 4;i++)
+        {
+            int newX{0};
+            int newY{0};
+            Direction direction;
+            switch (i) {
+            case 0:
+                newX = currentNode.state.rx()-1;
+                newY = currentNode.state.ry();
+                direction = Direction::Left;
+                break;
+            case 1:
+                newX = currentNode.state.rx()+1;
+                newY = currentNode.state.ry();
+                direction = Direction::Right;
+                break;
+            case 2:
+                newX = currentNode.state.rx();
+                newY = currentNode.state.ry()-1;
+                direction = Direction::Up;
+                break;
+            case 3:
+                newX = currentNode.state.rx();
+                newY = currentNode.state.ry()+1;
+                direction = Direction::Down;
+            default:
+                break;
+            }
+
+            if(!world->positionAvaliable(newX, newY))
+            {
+                continue;
+            }
+
+            float cost = world->getTile(newX, newY)->getValue();
+
+            QPoint nearbyPoint(newX, newY);
+
+            std::shared_ptr<PlannerNode> neighborNode = worldNodes[nearbyPoint.ry()*world->getCols()+nearbyPoint.rx()];
+
+           if(neighborNode->givenCost!=-1)
+           {
+               if(currentNode.givenCost+cost < worldNodes[nearbyPoint.ry()*world->getCols()+nearbyPoint.rx()]->givenCost)
+               {
+
+
+                   neighborNode->previousNode = worldNodes[currentNode.state.ry()*world->getCols()+currentNode.state.rx()];
+                   neighborNode->direction = direction;
+                   neighborNode->givenCost = currentNode.givenCost+cost;
+                   neighborNode->finalCost = neighborNode->givenCost+heuristic(nearbyPoint);
+                   frontier.push(*neighborNode);
+
+                   continue;
+
+               }
+               else
+               {
+                   continue;
+               }
+
+           }
+
+
+           neighborNode->givenCost = currentNode.givenCost+cost;
+           neighborNode->finalCost = neighborNode->givenCost+heuristic(nearbyPoint);
+           neighborNode->direction = direction;
+           neighborNode->previousNode = worldNodes[currentNode.state.ry()*world->getCols()+currentNode.state.rx()];;
+
+           frontier.push(*neighborNode);
+
+        }
+
+     count++;
 
     }
     auto end = std::chrono::high_resolution_clock::now();
@@ -200,6 +364,8 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar(std::function<float(QPoi
 
 std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPoint&)> heuristic)
 {
+
+    std::cout<<heuristicWeight<<std::endl;
     auto start = std::chrono::high_resolution_clock::now();
 
     for(auto& node: worldNodes)
@@ -278,29 +444,32 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPo
                 continue;
             }
 
-            float cost = world->getTile(newX, newY)->getValue();
+            float cost = world->getTile(newX, newY)->getValue()*256;
 
             QPoint nearbyPoint(newX, newY);
 
-            auto neighborNode = worldNodes[nearbyPoint.ry()*world->getCols()+nearbyPoint.rx()];
+            std::shared_ptr<PlannerNode> neighborNode = worldNodes[nearbyPoint.ry()*world->getCols()+nearbyPoint.rx()];
 
            if(neighborNode->givenCost!=-1)
            {
                if(currentNode->givenCost+cost < worldNodes[nearbyPoint.ry()*world->getCols()+nearbyPoint.rx()]->givenCost)
                {
-                   neighborNode->previousNode = currentNode;
-                   neighborNode->direction = direction;
-                   neighborNode->givenCost = currentNode->givenCost+cost;
-                   neighborNode->finalCost = neighborNode->givenCost+heuristic(nearbyPoint);
 
-
-                   if(frontier.find(neighborNode)==frontier.end())
+                   if(frontier.find(neighborNode)==frontier.end())  //in reached list
                    {
+                       neighborNode->previousNode = currentNode;
+                       neighborNode->direction = direction;
+                       neighborNode->givenCost = currentNode->givenCost+cost;
+                       neighborNode->finalCost = neighborNode->givenCost+heuristic(nearbyPoint);
                        frontier.insert(neighborNode);
                    }
                    else
                    {
                        frontier.erase(neighborNode);
+                       neighborNode->previousNode = currentNode;
+                       neighborNode->direction = direction;
+                       neighborNode->givenCost = currentNode->givenCost+cost;
+                       neighborNode->finalCost = neighborNode->givenCost+heuristic(nearbyPoint);
                        frontier.insert(neighborNode);
                    }
 
@@ -438,6 +607,7 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar2(std::function<float(QPo
 
 std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar3(std::function<float(QPoint&)> heuristic)
 {
+    std::cout << "Start " <<std::endl;
     auto start = std::chrono::high_resolution_clock::now();
 
 
@@ -467,6 +637,7 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar3(std::function<float(QPo
         {
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+
             std::cout << "Time taken by success path finder: " << duration << " microseconds" <<" ,steps: " <<count<<std::endl;
             return actionsToThisNode(currentNode);
 
@@ -541,13 +712,15 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar3(std::function<float(QPo
 
                     if(currentNode->givenCost + cost < (*iteratorFrontier)->givenCost)// if(currentNode->givenCost + cost+ heuristicWeight*heuristic(nearbyPoint) < (*iteratorFrontier)->finalCost)
                     {
-                        (*iteratorFrontier)->previousNode = currentNode;
-                        (*iteratorFrontier)->direction = direction;
-                        (*iteratorFrontier)->givenCost = currentNode->givenCost + cost;
-                        (*iteratorFrontier)->finalCost = (*iteratorFrontier)->givenCost + heuristic(nearbyPoint);
-                        auto nodeF = (*iteratorFrontier);
+                        std::shared_ptr<PlannerNode> nodeF = (*iteratorFrontier);
 
                         frontier.erase(iteratorFrontier);
+                        nodeF->previousNode = currentNode;
+                        nodeF->direction = direction;
+                        nodeF->givenCost = currentNode->givenCost + cost;
+                        nodeF->finalCost = nodeF->givenCost + heuristic(nearbyPoint);
+
+
                         frontier.insert(nodeF);
                         continue;
 

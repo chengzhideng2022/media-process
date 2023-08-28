@@ -63,7 +63,7 @@ void GameScreen::setUp(QString map)
     });
 
     connect(dashBoard.get(), &DashBoard::changeHeuristicsWeight, this, [&](float newValue){
-        pathPlanner->setHeuristicWeight(newValue/(float)(100));
+        pathPlanner->setHeuristicWeight(newValue);//(float)(100)
     });
 
 
@@ -180,7 +180,7 @@ void GameScreen::moveProt(int id,int x, int y)//Direction direction)
         }
         else
         {
-            qDebug()<<-(world->getTile(x,y)->getValue());//*100.0*world->getEnergyConstant()*0.5;
+            //qDebug()<<-(world->getTile(x,y)->getValue());//*100.0*world->getEnergyConstant()*0.5;
             world->protGainEnergy(id, -(world->getTile(x,y)->getValue())*100.0*world->getEnergyConstant()*0.5);
         }
 
@@ -438,7 +438,7 @@ void GameScreen::autoplay()
 
 
 
-     if(world->getProtagonistes().at(0)->getHealth() > (30-healthLose) || !hp)
+     if(world->getProtagonistes().at(0)->getHealth() > (50-healthLose) || !hp)
      {
          std::cout<<world->getProtagonistes().at(0)->getHealth()<<std::endl;
          int xToGo;
@@ -508,40 +508,47 @@ void GameScreen::processCommand(QString command)
     {
     case 0:
         protIndex = match.captured(2).toInt();
+        if(protIndex>=(int)world->getProtagonistes().size()) break;
         x = world->getProtagonistes().at(protIndex)->getXPos();
         y = world->getProtagonistes().at(protIndex)->getYPos()-1;
         moveProt(protIndex, x, y);
         break;
     case 1:
         protIndex = match.captured(2).toInt();
+        if(protIndex>=(int)world->getProtagonistes().size()) break;
         x = world->getProtagonistes().at(protIndex)->getXPos()+1;
         y = world->getProtagonistes().at(protIndex)->getYPos();
         moveProt(protIndex, x, y);
         break;
     case 2:
         protIndex = match.captured(2).toInt();
+        if(protIndex>=(int)world->getProtagonistes().size()) break;
         x = world->getProtagonistes().at(protIndex)->getXPos()-1;
         y = world->getProtagonistes().at(protIndex)->getYPos();
         moveProt(protIndex, x, y);
         break;
     case 3:
         protIndex = match.captured(2).toInt();
+        if(protIndex>=(int)world->getProtagonistes().size()) break;
         x = world->getProtagonistes().at(protIndex)->getXPos();
         y = world->getProtagonistes().at(protIndex)->getYPos()+1;
         moveProt(protIndex, x, y);
         break;
     case 4:
         protIndex = match.captured(2).toInt();
+        if(protIndex>=(int)world->getProtagonistes().size()) break;
         x = match.captured(3).toInt();
         y = match.captured(4).toInt();
         toFindPath(protIndex, QPoint(x, y));
         break;
     case 5:
         protIndex = match.captured(2).toInt();
+        if(protIndex>=(int)world->getProtagonistes().size()) break;
         attackNearest(protIndex);
         break;
     case 6:
         protIndex = match.captured(2).toInt();
+        if(protIndex>=(int)world->getProtagonistes().size()) break;
         takeNearestHp(protIndex);
         break;
     case 7:

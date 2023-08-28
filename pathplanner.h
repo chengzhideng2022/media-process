@@ -70,6 +70,7 @@ public:
 
     const std::function<float (int, int, int, int)> &getManhattanDistance() const;
 
+    std::shared_ptr<std::vector<QPoint> > AStar4(std::function<float (QPoint &)> heuristic);
 private:
 
     std::function<float(QPoint&)> manhattanHeuristic{[&](QPoint& state){return heuristicWeight*(std::abs(state.rx()-endState.rx())+std::abs(state.ry()-endState.ry())); }};
@@ -112,7 +113,7 @@ private:
     QPoint startState;
     QPoint endState;
 
-    float heuristicWeight{0.5};
+    float heuristicWeight{50};
 
 
     bool isGoalState(QPoint& state) { return state.rx()==endState.rx() && state.ry()==endState.ry();}

@@ -11,7 +11,7 @@ void GameWorld::createGameWorld(QString map, std::unique_ptr<World> world)
         std::unique_ptr<Tile> newTile = std::move(tile);
         float val = newTile->getValue();
         if(val != std::numeric_limits<float>::infinity()){
-           if(val<1)  newTile->setValue(1-val); //
+             newTile->setValue(1-val); //if(val<1)
         }
         tiles.push_back( std::move(newTile) );
     }
