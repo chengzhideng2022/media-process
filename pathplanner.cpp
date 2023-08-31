@@ -7,6 +7,7 @@
 #include <chrono>
 #include <QHash>
 #include <QSet>
+#include <execution>
 
 namespace std {
     template <>
@@ -382,14 +383,22 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPo
 
     auto less{ [](std::shared_ptr<PlannerNode> const& n1, std::shared_ptr<PlannerNode> const& n2)
         {
-            return n1->finalCost < n2->finalCost;
+            if(n1->finalCost < n2->finalCost) return true;
+            else if(n1->finalCost == n2->finalCost)
+            {
+                return n1.get()>n2.get();
+            }
+            else
+            {
+                return false;
+            }
         }
                 };
-    std::multiset<std::shared_ptr<PlannerNode>, decltype(less)> frontier(less);
+    std::set<std::shared_ptr<PlannerNode>, decltype(less)> frontier(less);
 
 
     std::shared_ptr<PlannerNode> startNode = worldNodes[startState.ry()*world->getCols()+startState.rx()];
-    startNode->givenCost = 0; //world->getTile(startState.rx(), startState.ry())->getValue();
+    startNode->givenCost = 0;
     startNode->finalCost = startNode->givenCost + heuristic(startState);
     frontier.insert(startNode);
 
@@ -455,7 +464,8 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPo
                if(currentNode->givenCost+cost < worldNodes[nearbyPoint.ry()*world->getCols()+nearbyPoint.rx()]->givenCost)
                {
 
-                   if(frontier.find(neighborNode)==frontier.end())  //in reached list
+                   auto it = frontier.find(neighborNode);
+                   if(it==frontier.end())  //in reached list
                    {
                        neighborNode->previousNode = currentNode;
                        neighborNode->direction = direction;
@@ -465,12 +475,12 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPo
                    }
                    else
                    {
-                       frontier.erase(neighborNode);
+                       frontier.erase(it);
                        neighborNode->previousNode = currentNode;
                        neighborNode->direction = direction;
                        neighborNode->givenCost = currentNode->givenCost+cost;
                        neighborNode->finalCost = neighborNode->givenCost+heuristic(nearbyPoint);
-                       frontier.insert(neighborNode);
+                       frontier.insert(std::move(neighborNode));
                    }
 
 
@@ -490,7 +500,7 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPo
            neighborNode->direction = direction;
            neighborNode->previousNode = currentNode;
 
-           frontier.insert(neighborNode);
+           frontier.insert(std::move(neighborNode));
 
         }
 
