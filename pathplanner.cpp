@@ -381,12 +381,14 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPo
     auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(end1 - start).count();
     std::cout << "Loop: " << duration1 << " microseconds" << std::endl;
 
-    auto less{ [](std::shared_ptr<PlannerNode> const& n1, std::shared_ptr<PlannerNode> const& n2)
+    auto comp{ [this](std::shared_ptr<PlannerNode> const& n1, std::shared_ptr<PlannerNode> const& n2)
         {
             if(n1->finalCost < n2->finalCost) return true;
             else if(n1->finalCost == n2->finalCost)
             {
-                return n1.get()>n2.get();
+                int d1 = n1->state.ry()*world->getCols()+n1->state.rx();
+                int d2 = n2->state.ry()*world->getCols()+n2->state.rx();
+                return d1>d2;
             }
             else
             {
@@ -394,7 +396,7 @@ std::shared_ptr<std::vector<QPoint>> PathPlanner::AStar1(std::function<float(QPo
             }
         }
                 };
-    std::set<std::shared_ptr<PlannerNode>, decltype(less)> frontier(less);
+    std::set<std::shared_ptr<PlannerNode>, decltype(comp)> frontier(comp);
 
 
     std::shared_ptr<PlannerNode> startNode = worldNodes[startState.ry()*world->getCols()+startState.rx()];
